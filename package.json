@@ -1,32 +1,43 @@
 {
-  "name": "yemeksepetim",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@clerk/nextjs": "^5.1.2",
-    "@radix-ui/react-slot": "^1.0.2",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "hono": "^4.4.0",
-    "lucide-react": "^0.379.0",
-    "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+    "name": "yemeksepetim",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "db:studio": "drizzle-kit studio",
+        "db:seed": "tsx ./scripts/seed.ts"
+    },
+    "dependencies": {
+        "@clerk/nextjs": "^5.1.2",
+        "@neondatabase/serverless": "^0.9.3",
+        "@paralleldrive/cuid2": "^2.2.2",
+        "@radix-ui/react-slot": "^1.0.2",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "dotenv": "^16.4.5",
+        "drizzle-orm": "^0.30.10",
+        "drizzle-zod": "^0.5.1",
+        "hono": "^4.4.0",
+        "lucide-react": "^0.379.0",
+        "next": "14.2.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "tailwind-merge": "^2.3.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.12",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.3.0",
+        "drizzle-kit": "^0.21.4",
+        "postcss": "^8.4.38",
+        "tailwindcss": "^3.4.3",
+        "tsx": "^4.11.0",
+        "typescript": "^5.4.5"
+    }
 }
