@@ -4,7 +4,6 @@ import {
     ClerkLoaded,
     SignedOut,
     SignedIn,
-    SignIn,
     SignInButton,
     SignUpButton,
 } from "@clerk/nextjs";
@@ -25,60 +24,73 @@ import { Icons } from "./icons";
 
 export const Header = () => {
     return (
-        <header>
-            <div className="fixed inset-x-0 shadow-2xl z-50 bg-white">
-                {/* LARGE SCREEN */}
-                <div className="container hidden h-16 items-center justify-between md:flex">
-                    <Logo />
+        <header className="fixed inset-x-0 shadow-md z-50 bg-white">
+            {/* LARGE SCREEN */}
+            <div className="container hidden h-16 items-center justify-between md:flex">
+                <Logo />
 
-                    <div className="flex items-center justify-between gap-x-8">
-                        <ShoppingBasket />
-
-                        <ClerkLoading>
-                            <Loader2Icon className="loading-icon" />
-                        </ClerkLoading>
-
-                        <ClerkLoaded>
-                            <SignedIn>
-                                <UserButton afterSignOutUrl="/" />
-                            </SignedIn>
-
-                            <SignedOut>
-                                <div className="flex items-center justify-between gap-x-4">
-                                    <Button variant="outline" asChild>
-                                        <Link href="/sign-in">Login</Link>
-                                    </Button>
-
-                                    <Button asChild>
-                                        <Link href="/sign-up">Register</Link>
-                                    </Button>
-                                </div>
-                            </SignedOut>
-                        </ClerkLoaded>
-                    </div>
-                </div>
-
-                {/* MOBILE */}
-                <div className="container flex h-16 items-center justify-between md:hidden">
-                    <div className="flex items-center justify-between gap-x-8">
-                        <ClerkLoading>
-                            <Loader2Icon className="loading-icon" />
-                        </ClerkLoading>
-
-                        <ClerkLoaded>
-                            <SignedIn>
-                                <UserButton afterSignOutUrl="/" />
-                            </SignedIn>
-                            <SignedOut>
-                                <SignedOutUserIcon />
-                            </SignedOut>
-                        </ClerkLoaded>
-                    </div>
-
-                    <Logo />
-
+                <div className="flex items-center justify-between gap-x-8">
                     <ShoppingBasket />
+
+                    <ClerkLoading>
+                        <Loader2Icon className="loading-icon" />
+                    </ClerkLoading>
+
+                    <ClerkLoaded>
+                        <SignedIn>
+                            <UserButton
+                                afterSignOutUrl="/"
+                                appearance={{
+                                    elements: {
+                                        button: {
+                                            width: 34,
+                                            height: 34,
+                                            "&:focus": {
+                                                boxShadow: "none",
+                                                outline: "2px solid #e11d48",
+                                                offset: "2px",
+                                            },
+                                        },
+                                    },
+                                }}
+                            />
+                        </SignedIn>
+
+                        <SignedOut>
+                            <div className="flex items-center justify-between gap-x-4">
+                                <Button variant="outline" asChild>
+                                    <Link href="/sign-in">Login</Link>
+                                </Button>
+
+                                <Button asChild>
+                                    <Link href="/sign-up">Register</Link>
+                                </Button>
+                            </div>
+                        </SignedOut>
+                    </ClerkLoaded>
                 </div>
+            </div>
+
+            {/* MOBILE */}
+            <div className="container flex h-16 items-center justify-between md:hidden">
+                <div className="flex items-center justify-between gap-x-8">
+                    <ClerkLoading>
+                        <Loader2Icon className="loading-icon" />
+                    </ClerkLoading>
+
+                    <ClerkLoaded>
+                        <SignedIn>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                        <SignedOut>
+                            <SignedOutUserIcon />
+                        </SignedOut>
+                    </ClerkLoaded>
+                </div>
+
+                <Logo />
+
+                <ShoppingBasket />
             </div>
         </header>
     );

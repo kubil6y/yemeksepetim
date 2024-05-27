@@ -3,10 +3,8 @@ import { Hero } from "./_components/hero"
 
 export default function MainPage() {
     return (
-        <div>
-            <Header />
+        <main>
             <Hero />
-        </div>
+        </main>
     )
 }
-
