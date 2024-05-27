@@ -1,12 +1,11 @@
 import { Header } from "@/components/header"
+import { Hero } from "./_components/hero"
 
 export default function MainPage() {
     return (
         <div>
             <Header />
-            <div className="pt-16">
-                <h1>MainPage</h1>
-            </div>
+            <Hero />
         </div>
     )
 }
