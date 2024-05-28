@@ -13,7 +13,7 @@ export const Cities = () => {
                         key={city.id}
                         name={city.name}
                         imageSrc={city.imageSrc}
-                        href={city.href}
+                        href={"/restaurants"}
                     />
                 ))}
             </div>
@@ -40,7 +40,7 @@ const CityCard = ({ name, imageSrc, href }: CityCardProps) => {
             </div>
             <Image
                 src={imageSrc}
-                alt={`${name}`}
+                alt={name}
                 className="h-auto w-full cursor-pointer transition duration-500 hover:scale-110"
                 fill
             />
