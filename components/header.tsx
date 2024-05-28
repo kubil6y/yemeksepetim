@@ -24,7 +24,7 @@ import { Icons } from "./icons";
 
 export const Header = () => {
     return (
-        <header className="fixed inset-x-0 shadow-md z-50 bg-white">
+        <header className="fixed inset-x-0 shadow-lg z-50 bg-white">
             {/* LARGE SCREEN */}
             <div className="container hidden h-16 items-center justify-between md:flex">
                 <Logo />

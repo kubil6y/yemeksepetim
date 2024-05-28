@@ -61,12 +61,11 @@ export const Hero = () => {
                                 </h1>
                                 <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">
                                     Experience the convenience of having your
-                                    cravings satisfied and your pantry stocked
-                                    without leaving your home. With our seamless
-                                    online platform, indulge in delicious meals
-                                    or stock up on essential groceries, all
-                                    delivered right to your doorstep
-                                    hassle-free.
+                                    favorite meals delivered to your doorstep
+                                    with just a few taps! Our seamless online
+                                    platform makes it easy to enjoy delicious
+                                    meals or stock up on essential groceries
+                                    hassle-free, all delivered straight to you.
                                 </p>
 
                                 <div className="mt-10 flex items-center gap-x-6">
@@ -86,7 +85,7 @@ export const Hero = () => {
                                 <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
                                     <div className="relative">
                                         <img
-                                            src="/assets/woman.avif"
+                                            src="/assets/hero/woman.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
@@ -96,7 +95,7 @@ export const Hero = () => {
                                 <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                                     <div className="relative">
                                         <img
-                                            src="/assets/girl-cake.avif"
+                                            src="/assets/hero/girl-cake.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
@@ -104,7 +103,7 @@ export const Hero = () => {
                                     </div>
                                     <div className="relative">
                                         <img
-                                            src="/assets/chef.webp"
+                                            src="/assets/hero/chef.webp"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
@@ -114,7 +113,7 @@ export const Hero = () => {
                                 <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                                     <div className="relative">
                                         <img
-                                            src="/assets/burger.avif"
+                                            src="/assets/hero/burger.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
@@ -122,7 +121,7 @@ export const Hero = () => {
                                     </div>
                                     <div className="relative">
                                         <img
-                                            src="/assets/plates.avif"
+                                            src="/assets/hero/plates.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
