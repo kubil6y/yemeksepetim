@@ -1,32 +1,8 @@
-# YEMEKSEPETIM NOTES
+[ ] make categories like brands
+[ ] seed data for restaurants and categories (handle many to many)
 
-## SETUP
+---
 
-[x] setup drizzle
-[ ] setup hono
-
-## APP
-
-[ ] cities page
-    - city information ...
-    - should show restaurants in that city
-
-there should be voting and commenting on restaurant
-
-    
-restaurant
-    name
-    *>food
-    *address
-    *>categories
-
-categories
-    *>restaurant
-    *>food
-    
-food
-    name
-    image
-    price (int)
-    *restaurant
-    *category
+[ ] filtering search pagination
+[ ] ordering system with cookies
+[ ] github link
