@@ -1,9 +1,14 @@
+import { cn } from "@/lib/utils";
 import { PopularBrandsCarousel } from "./popular-brands-carousel";
 
-export const PopularBrands = () => {
+type PopularBrandsProps = {
+    className?: string;
+};
+
+export const PopularBrands = ({ className }: PopularBrandsProps) => {
     return (
-        <div className="space-y-4">
-            <h2 className="text-2xl font-semibold mb-4">Popular Brands</h2>
+        <div className={cn("space-y-4 container", className)}>
+            <h2 className="text-2xl font-semibold -ml-4">Popular Brands</h2>
             <PopularBrandsCarousel />
         </div>
     );

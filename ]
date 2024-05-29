@@ -73,7 +73,7 @@ function BrandCard({ name, imageUrl, href }: BrandCardProps) {
                 />
             </div>
             <div className="ml-2 flex w-full items-center justify-start">
-                <p className="capitalize text-sm md:text-base font-semibold">{name}</p>
+                <p className="capitalize font-semibold">{name}</p>
             </div>
         </Link>
     );
