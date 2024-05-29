@@ -10,7 +10,8 @@ const app = new Hono().get("/popular", async (c) => {
     const popularRestaurants = await db
         .select()
         .from(restaurants)
-        .where(eq(restaurants.isPopular, true));
+        .where(eq(restaurants.isPopular, true))
+        .limit(10);
 
     return c.json({ data: popularRestaurants });
 });

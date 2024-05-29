@@ -6,7 +6,7 @@ export default function MainPage() {
     return (
         <main>
             <Hero />
-            <PopularBrands className="mb-16" />
+            <PopularBrands className="mb-20" />
             <Cities />
         </main>
     );
