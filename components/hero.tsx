@@ -74,7 +74,7 @@ export const Hero = () => {
                                         size="lg"
                                         asChild
                                     >
-                                        <Link href="/restaurants">
+                                        <Link href="/restaurants" className="z-50">
                                             Discover
                                             <CookingPotIcon className="size-5 ml-2.5 text-primary-foreground" />
                                         </Link>
@@ -95,7 +95,7 @@ export const Hero = () => {
                                 <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                                     <div className="relative">
                                         <img
-                                            src="/assets/hero/girl-cake.avif"
+                                            src="/assets/hero/burger.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />
@@ -113,7 +113,7 @@ export const Hero = () => {
                                 <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                                     <div className="relative">
                                         <img
-                                            src="/assets/hero/burger.avif"
+                                            src="/assets/hero/girl-cake.avif"
                                             alt=""
                                             className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                                         />

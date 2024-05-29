@@ -7,4 +7,26 @@
 
 ## APP
 
-[ ] /restraurants page
+[ ] cities page
+    - city information ...
+    - should show restaurants in that city
+
+there should be voting and commenting on restaurant
+
+    
+restaurant
+    name
+    *>food
+    *address
+    *>categories
+
+categories
+    *>restaurant
+    *>food
+    
+food
+    name
+    image
+    price (int)
+    *restaurant
+    *category

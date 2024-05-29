@@ -1,7 +1,8 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { QueryProvider } from "@/providers/query-provider";
+import "./globals.css";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,11 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={font.className}>{children}</body>
+                <QueryProvider>
+                    <body className={font.className}>
+                        {children}
+                    </body>
+                </QueryProvider>
             </html>
         </ClerkProvider>
     );

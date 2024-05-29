@@ -1,5 +1,5 @@
-import { Hero } from "./_components/hero"
-import { Cities } from "./_components/cities"
+import { Hero } from "@/components/hero"
+import { Cities } from "@/components/cities"
 
 export default function MainPage() {
     return (

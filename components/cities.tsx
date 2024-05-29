@@ -43,6 +43,7 @@ const CityCard = ({ name, imageSrc, href }: CityCardProps) => {
                 alt={name}
                 className="h-auto w-full cursor-pointer transition duration-500 hover:scale-110"
                 fill
+                sizes="50vw"
             />
         </Link>
     );
