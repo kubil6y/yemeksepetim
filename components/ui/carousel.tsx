@@ -1,4 +1,4 @@
-// NOTE This is customized
+// NOTE THIS IS CUSTOMIZED
 "use client";
 
 import * as React from "react";
@@ -208,7 +208,7 @@ const CarouselPrevious = React.forwardRef<
             variant={variant}
             size={size}
             className={cn(
-                "absolute size-8 sm:size-12 text-secondary rounded-full bg-primary",
+                "size-8 sm:size-12 absolute rounded-full bg-primary text-secondary transition hover:scale-110 hover:bg-rose-700 hover:text-secondary active:scale-90 disabled:hidden",
                 orientation === "horizontal"
                     ? "-left-12 top-1/2 -translate-y-1/2"
                     : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -237,7 +237,7 @@ const CarouselNext = React.forwardRef<
             variant={variant}
             size={size}
             className={cn(
-                "absolute size-8 sm:size-12 text-secondary rounded-full bg-primary",
+                "size-8 sm:size-12 absolute rounded-full bg-primary text-secondary transition hover:scale-125 hover:bg-rose-700 hover:text-secondary active:scale-90 disabled:hidden",
                 orientation === "horizontal"
                     ? "-right-12 top-1/2 -translate-y-1/2"
                     : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",

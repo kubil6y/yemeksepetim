@@ -1,4 +1,5 @@
-[ ] make categories like brands
+[x] make categories like brands
+    -   categories href link is missing for redirection
 [ ] seed data for restaurants and categories (handle many to many)
 
 ---
