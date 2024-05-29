@@ -1,14 +1,22 @@
 import { db } from "@/db/drizzle";
-import { eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { restaurants } from "@/db/schema";
+import { foods, restaurants } from "@/db/schema";
 //import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 
 const app = new Hono().get("/popular", async (c) => {
     const popularRestaurants = await db
-        .select()
+        .select({
+            id: restaurants.id,
+            name: restaurants.name,
+            imageUrl: restaurants.imageUrl,
+            itemCount: count(foods.id),
+        })
         .from(restaurants)
+        .leftJoin(foods, eq(restaurants.id, foods.restaurantId))
         .where(eq(restaurants.isPopular, true))
+        .groupBy(restaurants.id)
+        .orderBy(desc(count(foods.id)))
         .limit(10);
 
     return c.json({ data: popularRestaurants });

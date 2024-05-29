@@ -1,9 +1,13 @@
-[x] make categories like brands
-    -   categories href link is missing for redirection
-[ ] seed data for restaurants and categories (handle many to many)
+[ ] restaurant page
+    - show item list
+    - restaurant schema should be improved
 
----
+--- 
 
 [ ] filtering search pagination
 [ ] ordering system with cookies
 [ ] github link
+[ ] update README
+
+comment guifg=NvimLightGrey4
+Statement gui=bold guifg=NvimLightGrey2

@@ -1,5 +1,5 @@
 {
-  "id": "3526a5b2-214f-4e75-89d1-f0be1b7b1188",
+  "id": "ddc671fe-9947-4b95-a4b6-137ba9cddbe5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -30,63 +30,6 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.categories_to_restaurants": {
-      "name": "categories_to_restaurants",
-      "schema": "",
-      "columns": {
-        "category_id": {
-          "name": "category_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "restaurant_id": {
-          "name": "restaurant_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "categories_to_restaurants_category_id_categories_id_fk": {
-          "name": "categories_to_restaurants_category_id_categories_id_fk",
-          "tableFrom": "categories_to_restaurants",
-          "tableTo": "categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "categories_to_restaurants_restaurant_id_restaurants_id_fk": {
-          "name": "categories_to_restaurants_restaurant_id_restaurants_id_fk",
-          "tableFrom": "categories_to_restaurants",
-          "tableTo": "restaurants",
-          "columnsFrom": [
-            "restaurant_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "categories_to_restaurants_category_id_restaurant_id_pk": {
-          "name": "categories_to_restaurants_category_id_restaurant_id_pk",
-          "columns": [
-            "category_id",
-            "restaurant_id"
-          ]
-        }
-      },
       "uniqueConstraints": {}
     },
     "public.foods": {
@@ -148,7 +91,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "foods_category_id_categories_id_fk": {
@@ -161,7 +104,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -183,6 +126,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "is_popular": {
+          "name": "is_popular",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "image_url": {
           "name": "image_url",

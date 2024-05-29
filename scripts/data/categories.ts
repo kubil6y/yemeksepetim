@@ -1,39 +1,38 @@
 import { categories } from "@/db/schema";
-import { createId } from "@paralleldrive/cuid2";
 
 export const categoriesData: (typeof categories.$inferSelect)[] = [
     {
-        id: createId(),
+        id: "c1",
         name: "Pizza",
         imageUrl: "pizza.webp",
     },
     {
-        id: createId(),
+        id: "c2",
         name: "Burger",
         imageUrl: "burger.webp",
     },
     {
-        id: createId(),
+        id: "c3",
         name: "Salad",
         imageUrl: "salad.webp",
     },
     {
-        id: createId(),
+        id: "c4",
         name: "Coffee",
         imageUrl: "coffee.webp",
     },
     {
-        id: createId(),
+        id: "c5",
         name: "Desert",
         imageUrl: "desert.webp",
     },
     {
-        id: createId(),
+        id: "c6",
         name: "Chicken",
         imageUrl: "chicken.webp",
     },
     {
-        id: createId(),
+        id: "c7",
         name: "Kebab",
         imageUrl: "kebab.webp",
     },

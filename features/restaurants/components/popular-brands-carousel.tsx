@@ -9,15 +9,16 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, } from "lucide-react";
 import { useGetPopularBrands } from "../api/use-get-popular-brands";
+import { UnavailableHint } from "@/components/unavailable-hint";
 
 export const PopularBrandsCarousel = () => {
     const popularBrands = useGetPopularBrands();
     if (popularBrands.isLoading) {
         return (
             <div
-                className="w-full flex items-center justify-center"
+                className="flex w-full items-center justify-center"
                 style={{ height: 90 }}
             >
                 <Loader2Icon className="loading-icon" />
@@ -35,12 +36,14 @@ export const PopularBrandsCarousel = () => {
                 <CarouselContent>
                     {popularBrands.data?.map((brand) => {
                         const imageUrl = "/assets/brands/" + brand.imageUrl;
+                        const isUnavailable = brand.itemCount <= 0;
                         return (
                             <CarouselItem key={brand.id} className="basis-1/5">
                                 <BrandCard
                                     key={brand.id}
                                     name={brand.name}
                                     imageUrl={imageUrl}
+                                    isUnavailable={isUnavailable}
                                     href={`/restaurants/${brand.id}`}
                                 />
                             </CarouselItem>
@@ -58,9 +61,10 @@ type BrandCardProps = {
     name: string;
     imageUrl: string;
     href: string;
+    isUnavailable?: boolean;
 };
 
-function BrandCard({ name, imageUrl, href }: BrandCardProps) {
+function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
     return (
         <Link className="flex h-full w-full" href={href}>
             <div className="overflow-hidden rounded-lg">
@@ -72,8 +76,11 @@ function BrandCard({ name, imageUrl, href }: BrandCardProps) {
                     className="w-full"
                 />
             </div>
-            <div className="ml-2 flex w-full items-center justify-start">
-                <p className="capitalize text-sm md:text-base font-semibold">{name}</p>
+            <div className="ml-2 flex w-full flex-col items-start justify-center">
+                <p className="text-sm font-semibold capitalize md:text-base">
+                    {name}
+                </p>
+                {isUnavailable && <UnavailableHint className="mt-4"/>}
             </div>
         </Link>
     );

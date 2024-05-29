@@ -1,1 +1,0 @@
-ALTER TABLE "restaurants" ADD COLUMN "is_popular" boolean DEFAULT false NOT NULL;
