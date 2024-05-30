@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2Icon, } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useGetPopularBrands } from "../api/use-get-popular-brands";
 import { UnavailableHint } from "@/components/unavailable-hint";
 
@@ -80,7 +80,7 @@ function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
                 <p className="text-sm font-semibold capitalize md:text-base">
                     {name}
                 </p>
-                {isUnavailable && <UnavailableHint className="mt-4"/>}
+                {isUnavailable && <UnavailableHint className="mt-4" />}
             </div>
         </Link>
     );

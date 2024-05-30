@@ -36,4 +36,29 @@ export const categoriesData: (typeof categories.$inferSelect)[] = [
         name: "Kebab",
         imageUrl: "kebab.webp",
     },
+    {
+        id: "c8",
+        name: "Breakfast",
+        imageUrl: "breakfast.webp",
+    },
+    {
+        id: "c9",
+        name: "Pasta",
+        imageUrl: "pasta.webp",
+    },
+    {
+        id: "c10",
+        name: "Pastery",
+        imageUrl: "pastery.webp",
+    },
+    {
+        id: "c11",
+        name: "Sea Food",
+        imageUrl: "sea_food.webp",
+    },
+    {
+        id: "c12",
+        name: "Steak",
+        imageUrl: "steak.webp",
+    },
 ];

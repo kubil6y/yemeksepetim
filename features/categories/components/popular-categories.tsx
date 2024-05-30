@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils";
-import { CategoriesCarousel } from "./categories-carousel";
+import { PopularCategoriesCarousel } from "./popular-categories-carousel";
 
-type CategoriesProps = {
+type PopularCategoriesProps = {
     className?: string;
 };
 
-export const Categories = ({ className }: CategoriesProps) => {
+export const PopularCategories = ({ className }: PopularCategoriesProps) => {
     return (
         <div className={cn("container", className)}>
             <h2 className="text-2xl font-semibold -ml-4">Popular Categories</h2>
-            <CategoriesCarousel />
+            <PopularCategoriesCarousel />
         </div>
     );
 };

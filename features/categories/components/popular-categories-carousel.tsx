@@ -13,13 +13,13 @@ import { Loader2Icon } from "lucide-react";
 import { useGetCategories } from "../api/use-get-categories";
 import { UnavailableHint } from "@/components/unavailable-hint";
 
-export const CategoriesCarousel = () => {
+export const PopularCategoriesCarousel = () => {
     const categories = useGetCategories();
     if (categories.isLoading) {
         return (
             <div
                 className="flex w-full items-center justify-center"
-                style={{ height: 90 }}
+                style={{ height: 120 }}
             >
                 <Loader2Icon className="loading-icon" />
             </div>
@@ -41,7 +41,7 @@ export const CategoriesCarousel = () => {
                         return (
                             <CarouselItem
                                 key={category.id}
-                                className="basis-1/4"
+                                className="basis-2"
                             >
                                 <CategoryCard
                                     key={category.id}

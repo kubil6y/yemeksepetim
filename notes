@@ -1,13 +1,24 @@
 [ ] restaurant page
     - show item list
-    - restaurant schema should be improved
+    - restaurant schema should be improved for more details
+
+[ ] - order system
+
+[ ] rating system
+    - after order a user should be able to comment/rate restaurant and the food he purchased.
+
+[ ] footer
 
 --- 
 
 [ ] filtering search pagination
 [ ] ordering system with cookies
+
+--- 
+
 [ ] github link
 [ ] update README
 
-comment guifg=NvimLightGrey4
-Statement gui=bold guifg=NvimLightGrey2
+teslimat suresi
+restaurant puani
+yemek puani

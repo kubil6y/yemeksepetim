@@ -4,7 +4,8 @@ import { Hono } from "hono";
 import { foods, restaurants } from "@/db/schema";
 //import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 
-const app = new Hono().get("/popular", async (c) => {
+const app = new Hono()
+.get("/popular", async (c) => {
     const popularRestaurants = await db
         .select({
             id: restaurants.id,
@@ -20,6 +21,6 @@ const app = new Hono().get("/popular", async (c) => {
         .limit(10);
 
     return c.json({ data: popularRestaurants });
-});
+})
 
 export default app;

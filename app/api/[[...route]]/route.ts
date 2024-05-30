@@ -1,12 +1,14 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import restaurants from "./restaurants";
+import restaurant from "./restaurant";
 import categories from "./categories";
 
 const app = new Hono().basePath("/api");
 
 const routes = app
     .route("/restaurants", restaurants)
+    .route("/restaurant", restaurant)
     .route("/categories", categories);
 
 export const GET = handle(app);
