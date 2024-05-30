@@ -178,35 +178,27 @@ export function Filters() {
                                     )}
 
                                     {!categoriesQuery.isLoading && (
-                                        <div className="relative h-10 w-full">
-                                            <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-                                                <SearchIcon className="text-muted-foreground size-4" />
-                                            </div>
-                                            <Input
-                                                type="text"
-                                                value={categorySearchInput}
-                                                className="h-full w-full pl-8"
-                                                onChange={(e) => {
-                                                    e.preventDefault();
-                                                    setCategorySearchInput(
-                                                        e.target.value
-                                                    );
-                                                }}
-                                                placeholder="Search category..."
-                                            />
-                                            {categorySearchInput.length > 0 && (
-                                                <div
-                                                    className="absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer"
-                                                    onClick={() =>
-                                                        setCategorySearchInput(
-                                                            ""
-                                                        )
-                                                    }
-                                                >
-                                                    <XIcon className="size-5 text-muted-foreground" />
-                                                </div>
-                                            )}
-                                        </div>
+                                        <Input
+                                            type="text"
+                                            value={categorySearchInput}
+                                            className="h-full w-full pl-8"
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                setCategorySearchInput(
+                                                    e.target.value
+                                                );
+                                            }}
+                                            startIcon={SearchIcon}
+                                            endIcon={
+                                                categorySearchInput.length > 0
+                                                    ? XIcon
+                                                    : undefined
+                                            }
+                                            endIconOnClick={() =>
+                                                setCategorySearchInput("")
+                                            }
+                                            placeholder="Search category..."
+                                        />
                                     )}
 
                                     <div className="space-y-4 pt-4">
