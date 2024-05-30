@@ -6,6 +6,7 @@ import { foods, restaurants } from "@/db/schema";
 
 const app = new Hono()
 .get("/popular", async (c) => {
+    // https://orm.drizzle.team/learn/guides/count-rows
     const popularRestaurants = await db
         .select({
             id: restaurants.id,
