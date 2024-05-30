@@ -44,7 +44,7 @@ export const PopularBrandsCarousel = () => {
                                     name={brand.name}
                                     imageUrl={imageUrl}
                                     isUnavailable={isUnavailable}
-                                    href={`/restaurants/${brand.id}`}
+                                    href={`/restaurant/${brand.id}`}
                                 />
                             </CarouselItem>
                         );
@@ -66,7 +66,7 @@ type BrandCardProps = {
 
 function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
     return (
-        <Link className="flex h-full w-full" href={href}>
+        <Link className="flex" href={href}>
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}

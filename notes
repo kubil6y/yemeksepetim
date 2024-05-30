@@ -2,6 +2,8 @@
     - show item list
     - restaurant schema should be improved for more details
 
+[x] search field should take account if selected thing is in show less part or not!
+
 [ ] - order system
 
 [ ] rating system
@@ -10,6 +12,7 @@
 [ ] footer
 
 --- 
+
 
 [ ] filtering search pagination
 [ ] ordering system with cookies

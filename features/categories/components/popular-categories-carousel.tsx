@@ -39,16 +39,14 @@ export const PopularCategoriesCarousel = () => {
                         const imageUrl =
                             "/assets/categories/" + category.imageUrl;
                         return (
-                            <CarouselItem
-                                key={category.id}
-                                className="basis-2"
-                            >
+                            <CarouselItem key={category.id} className="basis-2">
                                 <CategoryCard
                                     key={category.id}
                                     name={category.name}
                                     imageUrl={imageUrl}
                                     isUnavailable={isUnavailable}
-                                    href={`/restaurants/${category.id}`}
+                                    // TODO add a query string and parse for filters! ${category.id}
+                                    href={`/restaurants`}
                                 />
                             </CarouselItem>
                         );
@@ -82,7 +80,7 @@ function CategoryCard({
                     width={120}
                     height={120}
                     alt={name}
-                    className="w-full"
+                    className="w-full transition hover:scale-110"
                 />
             </div>
             <div className="flex flex-col gap-1 items-center w-full">
