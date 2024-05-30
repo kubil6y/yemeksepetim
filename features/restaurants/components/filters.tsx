@@ -17,10 +17,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
 import { ChevronDownIcon, Loader2Icon, SearchIcon, XIcon } from "lucide-react";
-import { categories } from "@/db/schema";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { formatCurrency } from "@/lib/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
+import { categories } from "@/db/schema";
 
 const MIN_CATEGORIES_AMOUNT = 5;
 const MAX_SEARCH_INPUT_LENGTH = 10;
@@ -32,13 +34,24 @@ const sortingOptions = [
 ];
 
 const formSchema = z.object({
-    sorting: z.enum(["suggested", "restaurant_rating", "food_rating"]),
-    items: z.array(z.string()),
-    minOrderAmount: z.number(),
+    sorting: z
+        .enum(["suggested", "restaurant_rating", "food_rating"])
+        .optional(),
+    categories: z.array(z.string()),
+    minOrderAmount: z.number().max(1000),
 });
 type FormValues = z.input<typeof formSchema>;
 
+const defaultValues: FormValues = {
+    sorting: "suggested",
+    categories: [],
+    minOrderAmount: 50,
+};
+
 export function Filters() {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [showAllCategories, setShowAllCategories] = useState<boolean>(false);
     const [categorySearchInput, setCategorySearchInput] = useState<string>("");
     const [categoryOptions, setCategoryOptions] = useState<
@@ -48,21 +61,70 @@ export function Filters() {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            sorting: "suggested",
-            items: [],
-            minOrderAmount: 50,
-        },
+        defaultValues,
     });
 
     function onSubmit(values: FormValues) {
-        console.log(values);
+        const categoryIds = values.categories
+            .map((categoryId) => encodeURIComponent(categoryId))
+            .join(",");
+        const query = {
+            sorting:
+                values.sorting !== defaultValues.sorting ? values.sorting : "",
+            categories: categoryIds,
+            min_order_amount:
+                values.minOrderAmount !== defaultValues.minOrderAmount
+                    ? values.minOrderAmount
+                    : "",
+        };
+        const url = qs.stringifyUrl(
+            {
+                url: pathname,
+                query,
+            },
+            { skipNull: true, skipEmptyString: true }
+        );
+        router.push(url);
     }
 
     function onClear() {
         setCategorySearchInput("");
         form.reset();
+        router.push("/restaurants");
     }
+
+    // Parse incoming query on first render
+    useEffect(() => {
+        const categoriesQs = searchParams.get("categories");
+        const sorting = searchParams.get("sorting") ?? defaultValues.sorting;
+        const minOrderAmount = searchParams.get("min_order_amount")
+            ? Number(searchParams.get("min_order_amount"))
+            : defaultValues.minOrderAmount;
+
+        const result = formSchema.safeParse({
+            categories: categoriesQs ? categoriesQs.split(",") : [],
+            sorting,
+            minOrderAmount,
+        });
+
+        console.log(result);
+
+        if (result.data) {
+            form.setValue("sorting", result.data.sorting);
+            form.setValue("minOrderAmount", result.data.minOrderAmount);
+            if (categoriesQuery.data) {
+                const matchingCategoryIds: string[] = [];
+                for (const categoryId of result.data.categories) {
+                    for (const category of categoriesQuery.data) {
+                        if (categoryId === category.id) {
+                            matchingCategoryIds.push(category.id);
+                        }
+                    }
+                }
+                form.setValue("categories", matchingCategoryIds);
+            }
+        }
+    }, [categoriesQuery.data]);
 
     // Resolve category options
     useEffect(() => {
@@ -96,7 +158,7 @@ export function Filters() {
             return;
         }
         let minIndex = 0;
-        for (const selectedOptionId of form.getValues("items")) {
+        for (const selectedOptionId of form.getValues("categories")) {
             for (let i = 0; i < categoriesQuery.data.length; i++) {
                 const item = categoriesQuery.data[i];
                 if (selectedOptionId === item.id && minIndex < i) {
@@ -107,7 +169,7 @@ export function Filters() {
         if (minIndex >= MIN_CATEGORIES_AMOUNT) {
             setShowAllCategories(true);
         }
-    }, [categorySearchInput]);
+    }, [categorySearchInput, categoriesQuery.data]);
 
     return (
         <Card className="sticky left-0 top-[120px] hidden h-[640px] w-[320px] overflow-y-auto lg:block lg:shrink-0">
@@ -166,7 +228,7 @@ export function Filters() {
 
                         <FormField
                             control={form.control}
-                            name="items"
+                            name="categories"
                             render={() => (
                                 <FormItem>
                                     <div className="mb-4">
@@ -206,21 +268,21 @@ export function Filters() {
                                     )}
 
                                     <div className="space-y-4 pt-4">
-                                        {categoryOptions.map((item) => (
+                                        {categoryOptions.map((category) => (
                                             <FormField
-                                                key={item.id}
+                                                key={category.id}
                                                 control={form.control}
-                                                name="items"
+                                                name="categories"
                                                 render={({ field }) => {
                                                     return (
                                                         <FormItem
-                                                            key={item.id}
+                                                            key={category.id}
                                                             className="flex flex-row items-start space-x-3 space-y-0"
                                                         >
                                                             <FormControl>
                                                                 <Checkbox
                                                                     checked={field.value?.includes(
-                                                                        item.id
+                                                                        category.id
                                                                     )}
                                                                     onCheckedChange={(
                                                                         checked
@@ -229,7 +291,7 @@ export function Filters() {
                                                                             ? field.onChange(
                                                                                 [
                                                                                     ...field.value,
-                                                                                    item.id,
+                                                                                    category.id,
                                                                                 ]
                                                                             )
                                                                             : field.onChange(
@@ -238,14 +300,14 @@ export function Filters() {
                                                                                         value
                                                                                     ) =>
                                                                                         value !==
-                                                                                        item.id
+                                                                                        category.id
                                                                                 )
                                                                             );
                                                                     }}
                                                                 />
                                                             </FormControl>
                                                             <FormLabel className="ml-2 cursor-pointer font-normal">
-                                                                {item.name}
+                                                                {category.name}
                                                             </FormLabel>
                                                         </FormItem>
                                                     );
@@ -303,15 +365,17 @@ export function Filters() {
                                     <FormLabel className="flex items-center justify-start gap-2 mb-4 text-sm">
                                         Minimum Order Amount{" "}
                                         <span className="text-lg text-primary">
-                                            {formatCurrency(value)}
+                                            {formatCurrency(Number(value))}
                                         </span>
                                     </FormLabel>
                                     <FormControl>
                                         <Slider
+                                            className="cursor-pointer"
                                             min={0}
                                             max={300}
                                             step={30}
                                             defaultValue={[value]}
+                                            onChange={(a) => console.log(a)}
                                             onValueChange={(vals) => {
                                                 onChange(vals[0]);
                                             }}

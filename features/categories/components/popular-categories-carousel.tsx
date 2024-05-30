@@ -7,6 +7,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import qs from "query-string";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader2Icon } from "lucide-react";
@@ -25,6 +26,7 @@ export const PopularCategoriesCarousel = () => {
             </div>
         );
     }
+
     return (
         <div className="container">
             <Carousel
@@ -38,6 +40,13 @@ export const PopularCategoriesCarousel = () => {
                         const isUnavailable = category.itemCount <= 0;
                         const imageUrl =
                             "/assets/categories/" + category.imageUrl;
+                        const query = {
+                            categories: encodeURIComponent(category.id),
+                        }
+                        const url = qs.stringifyUrl({
+                            url: "/restaurants",
+                            query,
+                        }, { skipEmptyString: true, skipNull: true});
                         return (
                             <CarouselItem key={category.id} className="basis-2">
                                 <CategoryCard
@@ -45,8 +54,7 @@ export const PopularCategoriesCarousel = () => {
                                     name={category.name}
                                     imageUrl={imageUrl}
                                     isUnavailable={isUnavailable}
-                                    // TODO add a query string and parse for filters! ${category.id}
-                                    href={`/restaurants`}
+                                    href={url}
                                 />
                             </CarouselItem>
                         );
