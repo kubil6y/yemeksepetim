@@ -19,6 +19,8 @@ import { useGetCategories } from "@/features/categories/api/use-get-categories";
 import { ChevronDownIcon, Loader2Icon, SearchIcon, XIcon } from "lucide-react";
 import { categories } from "@/db/schema";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { formatCurrency } from "@/lib/utils";
 
 const MIN_CATEGORIES_AMOUNT = 5;
 const MAX_SEARCH_INPUT_LENGTH = 10;
@@ -32,6 +34,7 @@ const sortingOptions = [
 const formSchema = z.object({
     sorting: z.enum(["suggested", "restaurant_rating", "food_rating"]),
     items: z.array(z.string()),
+    minOrderAmount: z.number(),
 });
 type FormValues = z.input<typeof formSchema>;
 
@@ -48,6 +51,7 @@ export function Filters() {
         defaultValues: {
             sorting: "suggested",
             items: [],
+            minOrderAmount: 50,
         },
     });
 
@@ -129,7 +133,7 @@ export function Filters() {
                             name="sorting"
                             render={({ field }) => (
                                 <FormItem className="space-y-4">
-                                    <FormLabel className="font-semibold">
+                                    <FormLabel className="text-base">
                                         Sorting
                                     </FormLabel>
                                     <FormControl>
@@ -291,7 +295,31 @@ export function Filters() {
                             )}
                         />
 
-                        {/* TODO Price range */}
+                        <FormField
+                            control={form.control}
+                            name="minOrderAmount"
+                            render={({ field: { value, onChange } }) => (
+                                <FormItem>
+                                    <FormLabel className="flex items-center justify-start gap-2 mb-4 text-sm">
+                                        Minimum Order Amount{" "}
+                                        <span className="text-lg text-primary">
+                                            {formatCurrency(value)}
+                                        </span>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Slider
+                                            min={0}
+                                            max={300}
+                                            step={30}
+                                            defaultValue={[value]}
+                                            onValueChange={(vals) => {
+                                                onChange(vals[0]);
+                                            }}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
 
                         <Button type="submit" className="w-full">
                             Apply
