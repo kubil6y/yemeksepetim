@@ -1,44 +1,47 @@
-"use client";
-
-import { Filters } from "@/features/restaurants/components/filters";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { FilterDesktop, FilterModalButton } from "@/features/restaurants/components/filters";
 
 export default function RestaurantsPage() {
     return (
         <div className="container pt-16">
-            <div className="-pt-16 relative flex gap-10">
-                {/* Desktop Filter */}
-                <Filters />
-                <div className="min-h-[calc(100vh-80px)] w-full space-y-[50px]">
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
-                    <p>laskjd</p>
+            <div className="-pt-16 relative flex gap-10 w-full">
+                <FilterDesktop />
+
+                <div className="w-full">
+                    <div className="block lg:hidden">
+                        <FilterModalButton />
+                    </div>
+                    <div className="min-h-[calc(100vh-80px)] w-full space-y-[50px]">
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                        <p>laskjd</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,5 +138,5 @@ function Filters2() {
                 <div>Price range</div>
             </CardContent>
         </Card>
-    )
+    );
 }
