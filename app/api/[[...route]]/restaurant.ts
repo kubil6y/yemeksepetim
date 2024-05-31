@@ -19,8 +19,7 @@ const app = new Hono().get(
             return c.json({ error: "Missing id" }, 400);
         }
 
-        // TODO pagination
-        // filtering
+        // TODO pagination and also food from restaurants
         const [data] = await db
             .select()
             .from(restaurants)

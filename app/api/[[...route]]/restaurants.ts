@@ -1,11 +1,10 @@
-import { db } from "@/db/drizzle";
-import { count, desc, eq, inArray } from "drizzle-orm";
+import { count, desc, eq, inArray, and, gte } from "drizzle-orm";
 import { Hono } from "hono";
 import { foods, restaurants } from "@/db/schema";
-import { zValidator } from "@hono/zod-validator";
 import { readCSV, readInt, readString } from "@/lib/hono";
 import { RestaurantsQueryFilters } from "@/lib/validations";
 import { calculateMetadata } from "@/lib/filters";
+import { db } from "@/db/drizzle";
 //import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 
 const app = new Hono()
@@ -23,28 +22,50 @@ const app = new Hono()
     if (!result.success) {
         return c.json({ error: result.error.flatten() }, 422);
     }
-    return c.json({
-        result: result.data,
-        categories: f.getCategories(),
-        sorting: f.sorting,
-        minOrderAmount: f.minOrderAmount,
-        limit: f.filters.limit(),
-        offset: f.filters.offset(),
-        sortDirection: f.filters.sortDirection(),
-        sortColumn: f.filters.sortColumn(),
-        metadata: calculateMetadata(100, 2, 8),
-    });
 
-    //const categoriesArray = (categoriesQs ?? "").split(",");
-    //const data = await db
-    //.select()
-    //.from(foods)
-    //.where(inArray(foods.categoryId, categoriesArray));
+    const [totalRecords] = await db
+        .select({ count: count() })
+        .from(foods)
+        .leftJoin(restaurants, eq(foods.restaurantId, restaurants.id))
+        .where(
+            and(
+                f.getCategories()
+                    ? inArray(foods.categoryId, f.getCategories()!)
+                    : undefined,
+                gte(foods.price, f.minOrderAmount)
+            )
+        );
 
-    return c.json({ data: [] });
+    // TODO missing orderBy rating stuff (requires extra tables)
+    const data = await db
+        .select({
+            id: foods.id,
+            name: foods.name,
+            description: foods.description,
+            imageUrl: foods.imageUrl,
+            price: foods.price,
+        })
+        .from(foods)
+        .leftJoin(restaurants, eq(foods.restaurantId, restaurants.id))
+        .where(
+            and(
+                f.getCategories()
+                    ? inArray(foods.categoryId, f.getCategories()!)
+                    : undefined,
+                gte(foods.price, f.minOrderAmount)
+            )
+        )
+        .limit(f.filters.limit())
+        .offset(f.filters.offset());
+
+    const metadata = calculateMetadata(
+        totalRecords.count,
+        f.filters.page,
+        f.filters.pageSize
+    );
+    return c.json({ metadata, data });
 })
 .get("/popular", async (c) => {
-    // https://orm.drizzle.team/learn/guides/count-rows
     const popularRestaurants = await db
         .select({
             id: restaurants.id,
@@ -58,20 +79,7 @@ const app = new Hono()
         .groupBy(restaurants.id)
         .orderBy(desc(count(foods.id)))
         .limit(10);
-
     return c.json({ data: popularRestaurants });
 });
 
 export default app;
-
-//const resturantsQuerySchema = z.object({
-//sorting: z.enum([
-//"suggested",
-//"food_rating",
-//"-food_rating",
-//"restaurant_rating",
-//"-restaurant_rating",
-//]),
-//categories: z.string().optional(),
-//minOrderAmount: z.string().optional(),
-//});
