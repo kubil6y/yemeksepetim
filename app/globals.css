@@ -49,6 +49,7 @@
     }
 }
 
+
 @layer base {
     * {
         @apply border-border;
@@ -64,5 +65,9 @@
     }
     .unavailable {
         @apply bg-rose-500 px-2 py-1 text-xs text-foreground;
+    }
+
+    .another {
+        @apply hidden lg:block
     }
 }

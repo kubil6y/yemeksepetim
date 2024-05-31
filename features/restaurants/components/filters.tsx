@@ -5,12 +5,19 @@ import { Button } from "@/components/ui/button";
 import { FiltersForm } from "./filters-form";
 import { useFilterModal } from "../hooks/use-filter-modal";
 import { SlidersHorizontalIcon } from "lucide-react";
+import {useMedia} from "react-use";
 
 export const FilterDesktop = () => {
+    const isMobile = useMedia("(max-width: 1024px)", false);
+    if (isMobile) {
+        return null;
+    }
     return (
-        <Card className="sticky left-0 top-[120px] hidden h-[640px] w-[320px] overflow-y-auto lg:block lg:shrink-0">
-            <FiltersForm />
-        </Card>
+        <div className="pt-32 block">
+            <Card className="w-[240px] mt-16">
+                <FiltersForm />
+            </Card>
+        </div>
     );
 };
 

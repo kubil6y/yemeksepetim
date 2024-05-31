@@ -50,7 +50,7 @@ type FiltersFormProps = {
 };
 
 export const FiltersForm = ({ onApply }: FiltersFormProps) => {
-    const [isPending, startTransition] = useTransition();
+    const [_, startTransition] = useTransition();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();

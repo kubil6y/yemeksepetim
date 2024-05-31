@@ -34,3 +34,10 @@ export function isConvertibleToFloat(value: any): boolean {
         return false;
     }
 }
+
+export function maxChar(s: string, maxLength: number): string {
+    if (s.length < maxLength) {
+        return s;
+    }
+    return s.slice(0, maxLength) + "...";
+}
