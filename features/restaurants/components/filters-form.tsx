@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import qs from "query-string";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -33,9 +33,7 @@ const sortingOptions = [
 ];
 
 const formSchema = z.object({
-    sorting: z
-        .enum(["suggested", "restaurant_rating", "food_rating"])
-        .optional(),
+    sorting: z.enum(["suggested", "restaurant_rating", "food_rating"]),
     categories: z.array(z.string()),
     minOrderAmount: z.number().max(1000),
 });
@@ -49,9 +47,10 @@ const defaultValues: FormValues = {
 
 type FiltersFormProps = {
     onApply?: () => void;
-}
+};
 
-export const FiltersForm = ({onApply}: FiltersFormProps) =>{
+export const FiltersForm = ({ onApply }: FiltersFormProps) => {
+    const [isPending, startTransition] = useTransition();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -69,34 +68,36 @@ export const FiltersForm = ({onApply}: FiltersFormProps) =>{
 
     function onSubmit(values: FormValues) {
         const categoryIds = values.categories
-        .map((categoryId) => encodeURIComponent(categoryId))
-        .join(",");
-        const query = {
-            sorting:
-            values.sorting !== defaultValues.sorting ? values.sorting : "",
-            categories: categoryIds,
-            min_order_amount:
+            .map((categoryId) => encodeURIComponent(categoryId))
+            .join(",");
+        const sorting =
+            values.sorting !== defaultValues.sorting ? values.sorting : "";
+        const min_order_amount =
             values.minOrderAmount !== defaultValues.minOrderAmount
                 ? values.minOrderAmount
-                : "",
-        };
+                : "";
+
+        const query = { sorting, categories: categoryIds, min_order_amount };
         const url = qs.stringifyUrl(
-            {
-                url: pathname,
-                query,
-            },
+            { url: pathname, query },
             { skipNull: true, skipEmptyString: true }
         );
-        router.push(url);
-        if (onApply){
-            onApply();
-        }
+
+        startTransition(() => {
+            router.push(url);
+
+            if (onApply) {
+                onApply();
+            }
+        })
     }
 
     function onClear() {
-        setCategorySearchInput("");
-        form.reset();
-        router.push("/restaurants");
+        startTransition(() => {
+            setCategorySearchInput("");
+            form.reset();
+            router.push("/restaurants");
+        })
     }
 
     // Parse incoming query on first render
@@ -290,23 +291,23 @@ export const FiltersForm = ({onApply}: FiltersFormProps) =>{
                                                                 onCheckedChange={(
                                                                     checked
                                                                 ) => {
-                                                                        return checked
-                                                                            ? field.onChange(
-                                                                                [
-                                                                                    ...field.value,
-                                                                                    category.id,
-                                                                                ]
+                                                                    return checked
+                                                                        ? field.onChange(
+                                                                            [
+                                                                                ...field.value,
+                                                                                category.id,
+                                                                            ]
+                                                                        )
+                                                                        : field.onChange(
+                                                                            field.value?.filter(
+                                                                                (
+                                                                                    value
+                                                                                ) =>
+                                                                                    value !==
+                                                                                    category.id
                                                                             )
-                                                                            : field.onChange(
-                                                                                field.value?.filter(
-                                                                                    (
-                                                                                        value
-                                                                                    ) =>
-                                                                                        value !==
-                                                                                            category.id
-                                                                                )
-                                                                            );
-                                                                    }}
+                                                                        );
+                                                                }}
                                                             />
                                                         </FormControl>
                                                         <FormLabel className="ml-2 cursor-pointer font-normal">
@@ -346,9 +347,7 @@ export const FiltersForm = ({onApply}: FiltersFormProps) =>{
                                                 size="sm"
                                                 className="text-primary hover:text-primary"
                                                 onClick={() =>
-                                                    setShowAllCategories(
-                                                        true
-                                                    )
+                                                    setShowAllCategories(true)
                                                 }
                                             >
                                                 Show more
@@ -377,6 +376,9 @@ export const FiltersForm = ({onApply}: FiltersFormProps) =>{
                                         min={0}
                                         max={300}
                                         step={30}
+                                        value={[
+                                            form.getValues("minOrderAmount"),
+                                        ]}
                                         defaultValue={[value]}
                                         onValueChange={(vals) => {
                                             onChange(vals[0]);
@@ -394,5 +396,4 @@ export const FiltersForm = ({onApply}: FiltersFormProps) =>{
             </Form>
         </div>
     );
-}
-
+};

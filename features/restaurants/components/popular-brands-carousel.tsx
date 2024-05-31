@@ -73,7 +73,7 @@ function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
                     width={120}
                     height={120}
                     alt={name}
-                    className="w-full"
+                    className= "w-full transition hover:scale-110"
                 />
             </div>
             <div className="ml-2 flex w-full flex-col items-start justify-center">

@@ -36,7 +36,7 @@ const citiesData = [
 
 export const Cities = () => {
     return (
-        <div className="container space-y-8 mb-8">
+        <div className="container mb-8 space-y-8">
             <h3 className="text-3xl font-semibold">
                 We are in every city of Türkiye!
             </h3>
