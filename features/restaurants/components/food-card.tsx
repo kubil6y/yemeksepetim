@@ -19,7 +19,7 @@ export const FoodCard = ({
 }: FoodCardProps) => {
     const imageSrc = "/assets/" + imageUrl;
     return (
-        <Card className="w-full shrink-0 overflow-hidden rounded-lg shadow-lg cursor-pointer p-2">
+        <Card className="w-full shrink-0 overflow-hidden rounded-lg shadow-lg cursor-pointer px-4 py-2">
             <div className="item-center flex w-full justify-center">
                 <Image
                     className="h-full object-contain"

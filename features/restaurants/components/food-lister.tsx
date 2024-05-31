@@ -4,6 +4,7 @@ import { FoodCard } from "./food-card";
 import { UseQueryResult } from "@tanstack/react-query";
 import {Loader2Icon} from "lucide-react";
 import { ServerErrorMessage } from "@/components/server-error-message";
+import { NotFoundMessage } from "@/components/not-found-message";
 
 type FoodListerProps = {
     query: UseQueryResult<
@@ -19,15 +20,18 @@ type FoodListerProps = {
 };
 
 export const FoodLister = ({ query }: FoodListerProps) => {
-    if (query.isError) {
-        return <ServerErrorMessage />;
-    }
     if (query.isLoading) {
         return (
-            <div className="flex w-full items-center justify-center pt-24">
+            <div className="flex w-full items-center justify-center pt-16">
                 <Loader2Icon className="loading-icon" />
             </div>
         );
+    }
+    if (query.isError) {
+        return <ServerErrorMessage />;
+    }
+    if (query.data?.length === 0) {
+        return <NotFoundMessage />
     }
     return (
         <div className="mt-8 grid grid-cols-1 gap-4 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

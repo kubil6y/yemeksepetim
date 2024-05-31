@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { FiltersForm } from "./filters-form";
 import { useFilterModal } from "../hooks/use-filter-modal";
 import { SlidersHorizontalIcon } from "lucide-react";
-import {useMedia} from "react-use";
+import { useMedia } from "react-use";
 
 export const FilterDesktop = () => {
     const isMobile = useMedia("(max-width: 1024px)", false);
@@ -13,8 +13,8 @@ export const FilterDesktop = () => {
         return null;
     }
     return (
-        <div className="pt-32 block">
-            <Card className="w-[240px] mt-16">
+        <div className="block pt-32">
+            <Card className="mt-16 w-[240px]">
                 <FiltersForm />
             </Card>
         </div>
@@ -22,16 +22,17 @@ export const FilterDesktop = () => {
 };
 
 export const FilterModalButton = () => {
+    const isSmall = useMedia("(min-width: 640px)", false);
     const filterModal = useFilterModal();
     return (
         <Button
-            className="rounded-full flex gap-2 items-center"
+            className="flex items-center gap-2 rounded-full"
             variant="outline"
             onClick={filterModal.open}
             size="xl"
         >
-            <SlidersHorizontalIcon className="size-5 text-foreground" />{" "}
-            <span className="ml-4">Filters</span>
+            <SlidersHorizontalIcon className="size-5 text-foreground" />
+            {isSmall && <span className="block sm ml-4">Filter</span>}
         </Button>
     );
 };
