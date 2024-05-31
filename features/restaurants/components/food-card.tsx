@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { formatCurrency, maxChar } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { formatCurrency, maxChar } from "@/lib/utils";
 
 type FoodCardProps = {
     name: string;

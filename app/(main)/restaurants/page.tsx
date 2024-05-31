@@ -1,15 +1,11 @@
-"use client";
-
 import {
     FilterDesktop,
     FilterModalButton,
 } from "@/features/restaurants/components/filters";
 import { Input } from "@/components/ui/input";
-import { useGetFoods } from "@/features/restaurants/api/use-get-foods";
-import { FoodCard } from "@/features/restaurants/components/food-card";
+import { FoodListerWrapper } from "@/features/restaurants/components/food-lister-wrapper";
 
 export default function RestaurantsPage() {
-    const foods = useGetFoods();
     return (
         <div className="container">
             <div className="flex w-full gap-10">
@@ -27,13 +23,7 @@ export default function RestaurantsPage() {
                         </div>
                     </div>
 
-                    <div className="w-full">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8 p-2">
-                            {foods.data?.map((food) => (
-                                <FoodCard {...food} key={food.id}/>
-                            ))}
-                        </div>
-                    </div>
+                    <FoodListerWrapper />
                 </div>
             </div>
         </div>

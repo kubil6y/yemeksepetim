@@ -22,8 +22,8 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <QueryProvider>
                     <body className={font.className}>
-                        <ModalProviders />
                         {children}
+                        <ModalProviders />
                     </body>
                 </QueryProvider>
             </html>
