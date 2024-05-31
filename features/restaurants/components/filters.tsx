@@ -18,11 +18,13 @@ export const FilterModalButton = () => {
     const filterModal = useFilterModal();
     return (
         <Button
-            className=""
+            className="rounded-full flex gap-2 items-center"
             variant="outline"
             onClick={filterModal.open}
+            size="xl"
         >
-            <SlidersHorizontalIcon className="text-foreground mr-2 size-5" /> Filters
+            <SlidersHorizontalIcon className="size-5 text-foreground" />{" "}
+            <span className="ml-4">Filters</span>
         </Button>
     );
 };
