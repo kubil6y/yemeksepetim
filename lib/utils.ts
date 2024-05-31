@@ -10,9 +10,27 @@ export function sleep(ms: number): Promise<void> {
 }
 
 export function formatCurrency(value: number) {
-     return Intl.NumberFormat("tr-TR", {
+    return Intl.NumberFormat("tr-TR", {
         style: "currency",
         currency: "TRY",
         minimumFractionDigits: 0,
     }).format(value);
+}
+
+export function isConvertibleToInt(value: any): boolean {
+    try {
+        let convertedValue = parseInt(value, 10);
+        return !isNaN(convertedValue) && Number.isInteger(convertedValue);
+    } catch (e) {
+        return false;
+    }
+}
+
+export function isConvertibleToFloat(value: any): boolean {
+    try {
+        let convertedValue = parseFloat(value);
+        return !isNaN(convertedValue);
+    } catch (e) {
+        return false;
+    }
 }
