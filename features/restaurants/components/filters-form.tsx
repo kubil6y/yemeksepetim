@@ -22,6 +22,7 @@ import { Slider } from "@/components/ui/slider";
 import { formatCurrency } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { categories } from "@/db/schema";
+import { useConfirm } from "@/hooks/use-confirm";
 
 const MIN_CATEGORIES_AMOUNT = 5;
 const MAX_SEARCH_INPUT_LENGTH = 10;
@@ -50,6 +51,10 @@ type FiltersFormProps = {
 };
 
 export const FiltersForm = ({ onApply }: FiltersFormProps) => {
+    const [ClearConfirmDialog, confirm] = useConfirm(
+        "Are you sure?",
+        "You are about to clear your filters."
+    );
     const [_, startTransition] = useTransition();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -92,12 +97,15 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
         });
     }
 
-    function onClear() {
-        startTransition(() => {
-            setCategorySearchInput("");
-            form.reset();
-            router.push("/restaurants");
-        });
+    async function onClear() {
+        const confirmed = await confirm();
+        if (confirmed) {
+            startTransition(() => {
+                setCategorySearchInput("");
+                form.reset();
+                router.push("/restaurants");
+            });
+        }
     }
 
     // Parse incoming query on first render
@@ -177,223 +185,226 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
     }, [categorySearchInput, categoriesQuery.data]);
 
     return (
-        <div className="p-6">
-            <div className="flex items-center justify-between">
-                <p className="text-2xl font-semibold">Filters</p>
-                <Button
-                    variant="ghost"
-                    className="text-primary hover:text-primary"
-                    onClick={onClear}
-                >
-                    Clear
-                </Button>
-            </div>
+        <>
+            <ClearConfirmDialog />
+            <div className="p-6">
+                <div className="flex items-center justify-between">
+                    <p className="text-2xl font-semibold">Filters</p>
+                    <Button
+                        variant="ghost"
+                        className="text-primary hover:text-primary"
+                        onClick={onClear}
+                    >
+                        Clear
+                    </Button>
+                </div>
 
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
-                >
-                    <FormField
-                        control={form.control}
-                        name="sorting"
-                        render={({ field }) => (
-                            <FormItem className="space-y-4">
-                                <FormLabel className="text-base">
-                                    Sorting
-                                </FormLabel>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        value={field.value}
-                                        className="flex flex-col space-y-2"
-                                    >
-                                        {sortingOptions.map((option) => (
-                                            <FormItem
-                                                className="flex items-center space-y-0"
-                                                key={option.id}
-                                            >
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value={option.value}
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="ml-2 cursor-pointer font-normal">
-                                                    {option.label}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="categories"
-                        render={() => (
-                            <FormItem>
-                                <div className="mb-4">
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-8"
+                    >
+                        <FormField
+                            control={form.control}
+                            name="sorting"
+                            render={({ field }) => (
+                                <FormItem className="space-y-4">
                                     <FormLabel className="text-base">
-                                        Categories
+                                        Sorting
                                     </FormLabel>
-                                </div>
+                                    <FormControl>
+                                        <RadioGroup
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                            value={field.value}
+                                            className="flex flex-col space-y-2"
+                                        >
+                                            {sortingOptions.map((option) => (
+                                                <FormItem
+                                                    className="flex items-center space-y-0"
+                                                    key={option.id}
+                                                >
+                                                    <FormControl>
+                                                        <RadioGroupItem
+                                                            value={option.value}
+                                                        />
+                                                    </FormControl>
+                                                    <FormLabel className="ml-2 cursor-pointer font-normal">
+                                                        {option.label}
+                                                    </FormLabel>
+                                                </FormItem>
+                                            ))}
+                                        </RadioGroup>
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
 
-                                {categoriesQuery.isLoading && (
-                                    <div className="flex h-40 w-full shrink-0 items-center justify-center">
-                                        <Loader2Icon className="loading-icon mr-8" />
+                        <FormField
+                            control={form.control}
+                            name="categories"
+                            render={() => (
+                                <FormItem>
+                                    <div className="mb-4">
+                                        <FormLabel className="text-base">
+                                            Categories
+                                        </FormLabel>
                                     </div>
-                                )}
 
-                                {!categoriesQuery.isLoading && (
-                                    <Input
-                                        type="text"
-                                        value={categorySearchInput}
-                                        className="h-full w-full pl-8"
-                                        onChange={(e) => {
-                                            e.preventDefault();
-                                            setCategorySearchInput(
-                                                e.target.value
-                                            );
-                                        }}
-                                        startIcon={SearchIcon}
-                                        endIcon={
-                                            categorySearchInput.length > 0
-                                                ? XIcon
-                                                : undefined
-                                        }
-                                        endIconOnClick={() =>
-                                            setCategorySearchInput("")
-                                        }
-                                        placeholder="Search category..."
-                                    />
-                                )}
+                                    {categoriesQuery.isLoading && (
+                                        <div className="flex h-40 w-full shrink-0 items-center justify-center">
+                                            <Loader2Icon className="loading-icon" />
+                                        </div>
+                                    )}
 
-                                <div className="space-y-4 pt-4">
-                                    {categoryOptions.map((category) => (
-                                        <FormField
-                                            key={category.id}
-                                            control={form.control}
-                                            name="categories"
-                                            render={({ field }) => {
-                                                return (
-                                                    <FormItem
-                                                        key={category.id}
-                                                        className="flex flex-row items-start space-x-3 space-y-0"
-                                                    >
-                                                        <FormControl>
-                                                            <Checkbox
-                                                                checked={field.value?.includes(
-                                                                    category.id
-                                                                )}
-                                                                onCheckedChange={(
-                                                                    checked
-                                                                ) => {
-                                                                    return checked
-                                                                        ? field.onChange(
-                                                                            [
-                                                                                ...field.value,
-                                                                                category.id,
-                                                                            ]
-                                                                        )
-                                                                        : field.onChange(
-                                                                            field.value?.filter(
-                                                                                (
-                                                                                    value
-                                                                                ) =>
-                                                                                    value !==
-                                                                                    category.id
-                                                                            )
-                                                                        );
-                                                                }}
-                                                            />
-                                                        </FormControl>
-                                                        <FormLabel className="ml-2 cursor-pointer font-normal">
-                                                            {category.name}
-                                                        </FormLabel>
-                                                    </FormItem>
+                                    {!categoriesQuery.isLoading && (
+                                        <Input
+                                            type="text"
+                                            value={categorySearchInput}
+                                            className="h-full w-full pl-8"
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                setCategorySearchInput(
+                                                    e.target.value
                                                 );
                                             }}
+                                            startIcon={SearchIcon}
+                                            endIcon={
+                                                categorySearchInput.length > 0
+                                                    ? XIcon
+                                                    : undefined
+                                            }
+                                            endIconOnClick={() =>
+                                                setCategorySearchInput("")
+                                            }
+                                            placeholder="Search category..."
                                         />
-                                    ))}
+                                    )}
 
-                                    {categorySearchInput &&
-                                        categoryOptions.length === 0 && (
-                                            <div className="flex flex-col items-center justify-center">
-                                                <p className="word-break font-semibold">
-                                                    No results found for "
-                                                    {categorySearchInput.length >
-                                                        MAX_SEARCH_INPUT_LENGTH
-                                                        ? categorySearchInput.slice(
-                                                            0,
+                                    <div className="space-y-4 pt-4">
+                                        {categoryOptions.map((category) => (
+                                            <FormField
+                                                key={category.id}
+                                                control={form.control}
+                                                name="categories"
+                                                render={({ field }) => {
+                                                    return (
+                                                        <FormItem
+                                                            key={category.id}
+                                                            className="flex flex-row items-start space-x-3 space-y-0"
+                                                        >
+                                                            <FormControl>
+                                                                <Checkbox
+                                                                    checked={field.value?.includes(
+                                                                        category.id
+                                                                    )}
+                                                                    onCheckedChange={(
+                                                                        checked
+                                                                    ) => {
+                                                                            return checked
+                                                                                ? field.onChange(
+                                                                                    [
+                                                                                        ...field.value,
+                                                                                        category.id,
+                                                                                    ]
+                                                                                )
+                                                                                : field.onChange(
+                                                                                    field.value?.filter(
+                                                                                        (
+                                                                                            value
+                                                                                        ) =>
+                                                                                            value !==
+                                                                                                category.id
+                                                                                    )
+                                                                                );
+                                                                        }}
+                                                                />
+                                                            </FormControl>
+                                                            <FormLabel className="ml-2 cursor-pointer font-normal">
+                                                                {category.name}
+                                                            </FormLabel>
+                                                        </FormItem>
+                                                    );
+                                                }}
+                                            />
+                                        ))}
+
+                                        {categorySearchInput &&
+                                            categoryOptions.length === 0 && (
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <p className="word-break font-semibold">
+                                                        No results found for "
+                                                        {categorySearchInput.length >
                                                             MAX_SEARCH_INPUT_LENGTH
-                                                        ) + "..."
-                                                        : categorySearchInput}
-                                                    "
-                                                </p>
-                                                <p className="text-sm">
-                                                    Please try again
-                                                </p>
-                                            </div>
-                                        )}
+                                                            ? categorySearchInput.slice(
+                                                                0,
+                                                                MAX_SEARCH_INPUT_LENGTH
+                                                            ) + "..."
+                                                            : categorySearchInput}
+                                                        "
+                                                    </p>
+                                                    <p className="text-sm">
+                                                        Please try again
+                                                    </p>
+                                                </div>
+                                            )}
 
-                                    {!showAllCategories &&
-                                        !categorySearchInput &&
-                                        !categoriesQuery.isLoading && (
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="text-primary hover:text-primary"
-                                                onClick={() =>
-                                                    setShowAllCategories(true)
-                                                }
-                                            >
-                                                Show more
-                                                <ChevronDownIcon className="size-4 ml-2 text-primary" />
-                                            </Button>
-                                        )}
-                                </div>
-                            </FormItem>
-                        )}
-                    />
+                                        {!showAllCategories &&
+                                            !categorySearchInput &&
+                                            !categoriesQuery.isLoading && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="text-primary hover:text-primary"
+                                                    onClick={() =>
+                                                        setShowAllCategories(true)
+                                                    }
+                                                >
+                                                    Show more
+                                                    <ChevronDownIcon className="size-4 ml-2 text-primary" />
+                                                </Button>
+                                            )}
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="minOrderAmount"
-                        render={({ field: { value, onChange } }) => (
-                            <FormItem>
-                                <FormLabel className="mb-4 flex items-center justify-start gap-2 text-sm">
-                                    Minimum Order Amount{" "}
-                                    <span className="text-lg text-primary">
-                                        {formatCurrency(Number(value))}
-                                    </span>
-                                </FormLabel>
-                                <FormControl>
-                                    <Slider
-                                        className="cursor-pointer"
-                                        min={0}
-                                        max={300}
-                                        step={30}
-                                        value={[
-                                            form.getValues("minOrderAmount"),
-                                        ]}
-                                        defaultValue={[value]}
-                                        onValueChange={(vals) => {
-                                            onChange(vals[0]);
-                                        }}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="minOrderAmount"
+                            render={({ field: { value, onChange } }) => (
+                                <FormItem>
+                                    <FormLabel className="mb-4 flex items-center justify-start gap-2 text-sm">
+                                        Minimum Order Amount{" "}
+                                        <span className="text-lg text-primary">
+                                            {formatCurrency(Number(value))}
+                                        </span>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Slider
+                                            className="cursor-pointer"
+                                            min={0}
+                                            max={300}
+                                            step={30}
+                                            value={[
+                                                form.getValues("minOrderAmount"),
+                                            ]}
+                                            defaultValue={[value]}
+                                            onValueChange={(vals) => {
+                                                onChange(vals[0]);
+                                            }}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
 
-                    <Button type="submit" className="w-full">
-                        Apply
-                    </Button>
-                </form>
-            </Form>
-        </div>
+                        <Button type="submit" className="w-full">
+                            Apply
+                        </Button>
+                    </form>
+                </Form>
+            </div>
+        </>
     );
 };
