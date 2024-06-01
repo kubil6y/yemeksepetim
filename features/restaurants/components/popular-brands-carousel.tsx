@@ -17,10 +17,7 @@ export const PopularBrandsCarousel = () => {
     const popularBrands = useGetPopularBrands();
     if (popularBrands.isLoading) {
         return (
-            <div
-                className="flex w-full items-center justify-center"
-                style={{ height: 90 }}
-            >
+            <div className="flex h-24 w-full items-center justify-center">
                 <Loader2Icon className="loading-icon" />
             </div>
         );
@@ -38,7 +35,10 @@ export const PopularBrandsCarousel = () => {
                         const imageUrl = "/assets/brands/" + brand.imageUrl;
                         const isUnavailable = brand.itemCount <= 0;
                         return (
-                            <CarouselItem key={brand.id} className="basis-1/5">
+                            <CarouselItem
+                                key={brand.id}
+                                className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                            >
                                 <BrandCard
                                     key={brand.id}
                                     name={brand.name}
@@ -66,21 +66,21 @@ type BrandCardProps = {
 
 function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
     return (
-        <Link className="flex" href={href}>
+        <Link className="group flex w-full h-full" href={href}>
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}
                     width={120}
                     height={120}
                     alt={name}
-                    className= "w-full transition hover:scale-110"
+                    className="w-full transition group-hover:scale-110"
                 />
             </div>
-            <div className="ml-2 flex w-full flex-col items-start justify-center">
+            <div className="ml-2 flex w-full flex-col items-start justify-center space-y-1">
                 <p className="text-sm font-semibold capitalize md:text-base">
                     {name}
                 </p>
-                {isUnavailable && <UnavailableHint className="mt-4" />}
+                {isUnavailable && <UnavailableHint />}
             </div>
         </Link>
     );

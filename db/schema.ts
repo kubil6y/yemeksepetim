@@ -26,10 +26,10 @@ export const foods = pgTable("foods", {
     price: integer("price").notNull(),
     restaurantId: text("restaurant_id")
         .notNull()
-        .references(() => restaurants.id, { onDelete: "cascade"}),
+        .references(() => restaurants.id, { onDelete: "cascade" }),
     categoryId: text("category_id")
         .notNull()
-        .references(() => categories.id, { onDelete: "cascade"}),
+        .references(() => categories.id, { onDelete: "cascade" }),
 });
 
 export const foodRelations = relations(foods, ({ one }) => ({
@@ -42,11 +42,3 @@ export const foodRelations = relations(foods, ({ one }) => ({
         references: [categories.id],
     }),
 }));
-
-//export const orders = pgTable("orders", {
-//id: text("id").primaryKey(),
-//restaurantId: text("restaurant_id").notNull().references(() => restaurants.id),
-//price: integer("price").notNull(),
-//userId: text("user_id").notNull(),
-//address: text("address").notNull(),
-//});

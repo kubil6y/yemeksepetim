@@ -18,4 +18,3 @@ export const UnavailableHint = ({ className }: UnavailableHintProps) => {
         </div>
     );
 };
-//<ShieldAlertIcon style={{ width: 16, height: 16 }} />

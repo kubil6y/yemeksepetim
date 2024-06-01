@@ -1,13 +1,15 @@
-import { count, desc, eq, inArray, and, gte } from "drizzle-orm";
-import { Hono } from "hono";
-import { foods, restaurants } from "@/db/schema";
-import { readCSV, readInt, readString } from "@/lib/hono";
-import { RestaurantsQueryFilters } from "@/lib/validations";
-import { calculateMetadata } from "@/lib/filters";
-import { db } from "@/db/drizzle";
 import { z } from "zod";
+import { db } from "@/db/drizzle";
+import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
+import { foods, restaurants } from "@/db/schema";
+import { calculateMetadata } from "@/lib/filters";
+import { RestaurantsQueryFilters } from "@/lib/validations";
 //import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
+import { readCSV, readInt, readString } from "@/lib/hono";
+import { count, desc, eq, inArray, and, gte } from "drizzle-orm";
+
+const FOOD_PER_PAGE = 6;
 
 const app = new Hono()
 .get(
@@ -29,7 +31,7 @@ const app = new Hono()
         f.categories = readCSV(c, "categories", []);
         f.minOrderAmount = readInt(c, "min_order_amount", 50);
         f.filters.page = readInt(c, "page", 1);
-        f.filters.pageSize = readInt(c, "page_size", 6); // TODO make it 10
+        f.filters.pageSize = readInt(c, "page_size", FOOD_PER_PAGE);
         f.filters.sort = readString(c, "sorting", "suggested");
 
         const result = f.validate();

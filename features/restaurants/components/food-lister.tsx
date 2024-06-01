@@ -6,7 +6,6 @@ import { Loader2Icon } from "lucide-react";
 import { ServerErrorMessage } from "@/components/server-error-message";
 import { NotFoundMessage } from "@/components/not-found-message";
 import { CustomPagination } from "./custom-pagination";
-import { abort } from "process";
 
 type FoodListerProps = {
     query: UseQueryResult<
@@ -48,7 +47,7 @@ export const FoodLister = ({ query }: FoodListerProps) => {
     }
     return (
         <div className="space-y-8">
-            <div className="mt-8 grid grid-cols-1 gap-4 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {query.data?.data.map((food) => (
                     <FoodCard {...food} key={food.id} />
                 ))}

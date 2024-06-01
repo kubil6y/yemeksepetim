@@ -242,7 +242,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                 </div>
 
                                 {categoriesQuery.isLoading && (
-                                    <div className="flex h-40 w-[240px] shrink-0 items-center justify-center bg-rose-500">
+                                    <div className="flex h-40 w-full shrink-0 items-center justify-center">
                                         <Loader2Icon className="loading-icon mr-8" />
                                     </div>
                                 )}

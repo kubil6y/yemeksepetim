@@ -20,7 +20,6 @@ export const PopularCategoriesCarousel = () => {
         return (
             <div
                 className="flex w-full items-center justify-center"
-                style={{ height: 120 }}
             >
                 <Loader2Icon className="loading-icon" />
             </div>
@@ -48,7 +47,7 @@ export const PopularCategoriesCarousel = () => {
                             query,
                         }, { skipEmptyString: true, skipNull: true});
                         return (
-                            <CarouselItem key={category.id} className="basis-2">
+                            <CarouselItem key={category.id} className="xs:basis-1/2 sm:basis-1/3 md:basis-1/6">
                                 <CategoryCard
                                     key={category.id}
                                     name={category.name}
@@ -81,21 +80,21 @@ function CategoryCard({
     isUnavailable,
 }: CategoryCardProps) {
     return (
-        <Link className="flex h-full w-full flex-col gap-4" href={href}>
+        <Link className="group flex h-full w-full flex-col space-y-2" href={href}>
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}
                     width={120}
                     height={120}
                     alt={name}
-                    className="w-full transition hover:scale-110"
+                    className="w-full transition group-hover:scale-110"
                 />
             </div>
-            <div className="flex flex-col gap-1 items-center w-full">
-                <p className="text-sm font-semibold capitalize md:text-base text-center">
+            <div className="flex w-full flex-col items-center gap-1">
+                <p className="text-center text-sm font-semibold capitalize md:text-base">
                     {name}
                 </p>
-                {isUnavailable && <UnavailableHint className="" />}
+                {isUnavailable && <UnavailableHint />}
             </div>
         </Link>
     );
