@@ -34,8 +34,8 @@ export const useGetFoods = () => {
             if (!response.ok) {
                 throw new Error("Failed to fetch categories");
             }
-            const { data } = await response.json();
-            return data;
+            const { metadata, data }  = await response.json();
+            return { metadata, data };
         },
     });
     return query;

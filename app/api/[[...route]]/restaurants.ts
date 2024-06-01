@@ -29,7 +29,7 @@ const app = new Hono()
         f.categories = readCSV(c, "categories", []);
         f.minOrderAmount = readInt(c, "min_order_amount", 50);
         f.filters.page = readInt(c, "page", 1);
-        f.filters.pageSize = readInt(c, "page_size", 10);
+        f.filters.pageSize = readInt(c, "page_size", 6); // TODO make it 10
         f.filters.sort = readString(c, "sorting", "suggested");
 
         const result = f.validate();

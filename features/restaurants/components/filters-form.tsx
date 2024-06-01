@@ -89,7 +89,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
             if (onApply) {
                 onApply();
             }
-        })
+        });
     }
 
     function onClear() {
@@ -97,7 +97,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
             setCategorySearchInput("");
             form.reset();
             router.push("/restaurants");
-        })
+        });
     }
 
     // Parse incoming query on first render
@@ -242,7 +242,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                 </div>
 
                                 {categoriesQuery.isLoading && (
-                                    <div className="flex h-40 w-full items-center justify-center bg-rose-500">
+                                    <div className="flex h-40 w-[240px] shrink-0 items-center justify-center bg-rose-500">
                                         <Loader2Icon className="loading-icon mr-8" />
                                     </div>
                                 )}
@@ -364,7 +364,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                         name="minOrderAmount"
                         render={({ field: { value, onChange } }) => (
                             <FormItem>
-                                <FormLabel className="flex items-center justify-start gap-2 mb-4 text-sm">
+                                <FormLabel className="mb-4 flex items-center justify-start gap-2 text-sm">
                                     Minimum Order Amount{" "}
                                     <span className="text-lg text-primary">
                                         {formatCurrency(Number(value))}

@@ -46,13 +46,3 @@ export const FoodCard = ({
         </Card>
     );
 };
-
-/*
-<Image
-    src={imageSrc}
-    height={100}
-    width={100}
-    alt={name}
-    className="object-contain"
-/>
-*/

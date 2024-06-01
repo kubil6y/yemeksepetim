@@ -13,8 +13,8 @@ export const FilterDesktop = () => {
         return null;
     }
     return (
-        <div className="block pt-32">
-            <Card className="mt-16 w-[240px]">
+        <div className="block pt-32 shrink-0 w-[240px]">
+            <Card>
                 <FiltersForm />
             </Card>
         </div>
