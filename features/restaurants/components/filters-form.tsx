@@ -90,7 +90,6 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
 
         startTransition(() => {
             router.push(url);
-
             if (onApply) {
                 onApply();
             }
@@ -301,23 +300,23 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                                                     onCheckedChange={(
                                                                         checked
                                                                     ) => {
-                                                                            return checked
-                                                                                ? field.onChange(
-                                                                                    [
-                                                                                        ...field.value,
-                                                                                        category.id,
-                                                                                    ]
+                                                                        return checked
+                                                                            ? field.onChange(
+                                                                                [
+                                                                                    ...field.value,
+                                                                                    category.id,
+                                                                                ]
+                                                                            )
+                                                                            : field.onChange(
+                                                                                field.value?.filter(
+                                                                                    (
+                                                                                        value
+                                                                                    ) =>
+                                                                                        value !==
+                                                                                        category.id
                                                                                 )
-                                                                                : field.onChange(
-                                                                                    field.value?.filter(
-                                                                                        (
-                                                                                            value
-                                                                                        ) =>
-                                                                                            value !==
-                                                                                                category.id
-                                                                                    )
-                                                                                );
-                                                                        }}
+                                                                            );
+                                                                    }}
                                                                 />
                                                             </FormControl>
                                                             <FormLabel className="ml-2 cursor-pointer font-normal">
@@ -357,7 +356,9 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                                     size="sm"
                                                     className="text-primary hover:text-primary"
                                                     onClick={() =>
-                                                        setShowAllCategories(true)
+                                                        setShowAllCategories(
+                                                            true
+                                                        )
                                                     }
                                                 >
                                                     Show more
@@ -387,7 +388,9 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                             max={300}
                                             step={30}
                                             value={[
-                                                form.getValues("minOrderAmount"),
+                                                form.getValues(
+                                                    "minOrderAmount"
+                                                ),
                                             ]}
                                             defaultValue={[value]}
                                             onValueChange={(vals) => {

@@ -3,7 +3,7 @@ import {
     FilterModalButton,
 } from "@/features/restaurants/components/filters";
 import { Input } from "@/components/ui/input";
-import { FoodListerWrapper } from "@/features/restaurants/components/food-lister-wrapper";
+import { MainFoodLister } from "@/features/restaurants/components/main-food-lister";
 
 export default function RestaurantsPage() {
     return (
@@ -23,7 +23,7 @@ export default function RestaurantsPage() {
                         </div>
                     </div>
 
-                    <FoodListerWrapper />
+                    <MainFoodLister />
                 </div>
             </div>
         </div>
