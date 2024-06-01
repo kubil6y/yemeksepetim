@@ -37,7 +37,7 @@ export const PopularBrandsCarousel = () => {
                         return (
                             <CarouselItem
                                 key={brand.id}
-                                className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                                className="py-2 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                             >
                                 <BrandCard
                                     key={brand.id}
@@ -66,7 +66,7 @@ type BrandCardProps = {
 
 function BrandCard({ name, imageUrl, href, isUnavailable }: BrandCardProps) {
     return (
-        <Link className="group flex w-full h-full" href={href}>
+        <Link className="group flex h-full w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg" href={href}>
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}

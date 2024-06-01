@@ -47,7 +47,7 @@ export const PopularCategoriesCarousel = () => {
                             query,
                         }, { skipEmptyString: true, skipNull: true});
                         return (
-                            <CarouselItem key={category.id} className="xs:basis-1/2 sm:basis-1/3 md:basis-1/6">
+                            <CarouselItem key={category.id} className="py-2 xs:basis-1/2 sm:basis-1/3 md:basis-1/6 ">
                                 <CategoryCard
                                     key={category.id}
                                     name={category.name}
@@ -80,7 +80,7 @@ function CategoryCard({
     isUnavailable,
 }: CategoryCardProps) {
     return (
-        <Link className="group flex h-full w-full flex-col space-y-2" href={href}>
+        <Link className="group flex h-full w-full flex-col space-y-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg " href={href}>
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}
