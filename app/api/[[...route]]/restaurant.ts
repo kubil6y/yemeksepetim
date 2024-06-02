@@ -28,7 +28,6 @@ const app = new Hono().get(
         if (!data) {
             return c.json({ error: "restaurant not found" }, 404);
         }
-
         return c.json({ data });
     }
 );

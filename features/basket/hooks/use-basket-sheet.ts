@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface FilterModalState {
+interface BasketSheetState {
     isOpen: boolean;
     open: () => void;
     close: () => void;
 }
 
-export const useFilterModal = create<FilterModalState>()((set) => ({
+export const useBasketSheet = create<BasketSheetState>()((set) => ({
     isOpen: false,
     open: () => set(() => ({ isOpen: true })),
     close: () => set(() => ({ isOpen: false })),

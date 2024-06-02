@@ -1,9 +1,10 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@/providers/query-provider";
-import { ModalProviders } from "@/providers/modal-providers";
+import { SheetProvider } from "@/providers/sheet-provider";
+import { ModalProvider } from "@/providers/modal-provider";
+import "./globals.css";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,9 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <QueryProvider>
                     <body className={font.className}>
+                        <ModalProvider />
+                        <SheetProvider />
                         {children}
-                        <ModalProviders />
                     </body>
                 </QueryProvider>
             </html>

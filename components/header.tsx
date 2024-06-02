@@ -21,6 +21,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Icons } from "./icons";
+import { ShoppingBasket } from "@/features/basket/components/shopping-basket";
 
 export const Header = () => {
     return (
@@ -131,15 +132,5 @@ function SignedOutUserIcon() {
                 </div>
             </DialogContent>
         </Dialog>
-    );
-}
-
-function ShoppingBasket() {
-    return (
-        <Button asChild size="icon" variant="outline" className="rounded-full">
-            <Link href="/restaurants">
-                <ShoppingBasketIcon className="size-5 text-primary" />
-            </Link>
-        </Button>
     );
 }
