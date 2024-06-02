@@ -84,8 +84,8 @@ function CategoryCard({
             <div className="overflow-hidden rounded-lg">
                 <Image
                     src={imageUrl}
-                    width={120}
-                    height={120}
+                    width={160}
+                    height={160}
                     alt={name}
                     className="w-full transition group-hover:scale-110"
                 />

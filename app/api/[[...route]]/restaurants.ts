@@ -60,9 +60,10 @@ const app = new Hono()
                 description: foods.description,
                 imageUrl: foods.imageUrl,
                 price: foods.price,
+                restaurantName: restaurants.name,
             })
             .from(foods)
-            .leftJoin(restaurants, eq(foods.restaurantId, restaurants.id))
+            .innerJoin(restaurants, eq(foods.restaurantId, restaurants.id))
             .where(
                 and(
                     f.getCategories()

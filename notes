@@ -1,10 +1,9 @@
 [ ] restaurant page
-    - show item list
-    - restaurant schema should be improved for more details
+    [x] show item list
+    [ ] restaurant schema should be improved for more details
+        - desctiption, banner color or image?
 
-[x] search field should take account if selected thing is in show less part or not!
-
-[ ] - order system
+[ ] order system
 
 [ ] rating system
     - after order a user should be able to comment/rate restaurant and the food he purchased.
@@ -13,15 +12,10 @@
 
 --- 
 
-
-[ ] filtering search pagination
+[x] filtering search pagination
 [ ] ordering system with cookies
 
 --- 
 
 [ ] github link
 [ ] update README
-
-teslimat suresi
-restaurant puani
-yemek puani

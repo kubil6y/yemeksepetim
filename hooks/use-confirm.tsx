@@ -42,7 +42,7 @@ export const useConfirm = (
     const ConfirmationDialogue = () => (
         <Dialog open={isOpen}>
             <DialogContent>
-                <DialogHeader>
+                <DialogHeader className="space-y-4">
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription>{message}</DialogDescription>
                 </DialogHeader>

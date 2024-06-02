@@ -10,6 +10,7 @@ const config = {
         "./src/**/*.{ts,tsx}",
         // NOTE: I suffered for this.
         "./features/**/*.{ts,tsx}", 
+        "./hooks/**/*.{ts,tsx}", 
     ],
     prefix: "",
     theme: {
