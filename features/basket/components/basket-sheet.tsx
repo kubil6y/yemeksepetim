@@ -51,8 +51,8 @@ export const BasketSheet = () => {
                             <Icons.logo className="block" />
                         </div>
 
-                        {/* TODO leftoff */} 
-                        <ScrollArea className="w-full h-[60vh] border p-2">
+                        {/* TODO leftoff */}
+                        <ScrollArea className="w-full h-[60vh] border p-1 rounded-lg">
                             {basketItemCount === 0 ? (
                                 <div className="mt-12 flex w-full items-center justify-center bg-white p-5">
                                     <div className="space-y-5 text-center">
@@ -61,10 +61,13 @@ export const BasketSheet = () => {
                                                 <ShoppingBagIcon className="text-red-500" />
                                             </div>
                                         </div>
-                                        <p className="text-muted-foreground lg:text-lg">
-                                            Your shopping cart is empty. Browse
-                                            our products and add some items!
-                                        </p>
+                                        <div className="text-muted-foreground lg:text-lg">
+                                            <p>Your shopping cart is empty.</p>
+                                            <p>
+                                                Browse our products and add some
+                                                items!
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (
@@ -92,13 +95,15 @@ export const BasketSheet = () => {
                         </footer>
                     ) : (
                         <footer className="flex flex-col space-y-4">
-                            <div className="text-end text-3xl sm:text-5xl">
+                            <div className="text-end text-lg md:text-5xl">
                                 Total {formatCurrency(basketTotal)}
                             </div>
                             <div className="w-full space-y-2 items-center">
                                 <Button
                                     className="w-full uppercase tracking-wider"
-                                    onClick={() => console.log("TODO", basket.items)}
+                                    onClick={() =>
+                                        console.log("TODO", basket.items)
+                                    }
                                 >
                                     <CreditCardIcon className="mr-2" />
                                     Checkout

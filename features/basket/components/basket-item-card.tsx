@@ -18,24 +18,47 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
 
     return (
         <Card>
-            <CardContent className="flex items-center justify-between py-2 pl-2 pr-4">
-                <div className="flex gap-2 items-center">
+            <CardContent className="flex items-center justify-between p-2">
+                <div className="flex items-center gap-1 sm:gap-2">
+                    <div className="flex flex-col items-center gap-1 sm:hidden">
+                        <Button
+                            size="icon"
+                            onClick={() => addItem(item)}
+                            className="size-5 rounded-full"
+                        >
+                            <PlusIcon className="size-4" />
+                        </Button>
+
+                        <span className="w-4 text-center text-sm">
+                            {amount}
+                        </span>
+
+                        <Button
+                            size="icon"
+                            onClick={() => removeItem(id)}
+                            className="size-5 rounded-full"
+                        >
+                            <MinusIcon className="size-4" />
+                        </Button>
+                    </div>
+
                     <Image
                         src={item.imageUrl}
                         alt={item.name + " " + item.description}
-                        width={80}
-                        height={80}
+                        width={60}
+                        height={60}
                         className="object-contain"
                     />
+
                     <div className="w-full">
-                        <p className="text-semibold">{item.name} </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-semibold line-clamp-1 sm:line-clamp-2">{item.name} </p>
+                        <p className="line-clamp-1 sm:line-clamp-3 text-xs text-muted-foreground">
                             {item.description}{" "}
                         </p>
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-between gap-2 ml-4 sm:ml-8">
+                <div className="ml-4 hidden flex-col justify-between gap-2 sm:ml-8 sm:flex">
                     <div className="flex items-center justify-center gap-2">
                         <Button
                             size="icon"
@@ -66,15 +89,27 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
                             <TrashIcon className="size-4" />
                         </Button>
                     </div>
-                    <p className="text-muted-foreground text-sm italic text-end">
-                        {item.price}x{amount} = {formatCurrency(basketItemTotal)}
+                    <p className="text-end text-sm italic text-muted-foreground">
+                        {item.price}x{amount} ={" "}
+                        {formatCurrency(basketItemTotal)}
+                    </p>
+                </div>
+
+                <div className="flex flex-col sm:hidden shrink-0 gap-2 items-center">
+                    <Button
+                        size="icon"
+                        onClick={() => deleteItem(id)}
+                        className="size-6 flex items-center justify-center rounded-full "
+                        variant="destructive"
+                    >
+                        <TrashIcon className="size-3" />
+                    </Button>
+
+                    <p className="text-end text-sm italic text-muted-foreground">
+                        {formatCurrency(basketItemTotal)}
                     </p>
                 </div>
             </CardContent>
         </Card>
     );
 };
-
-//<p className="text-end text-muted-foreground">
-//{formatCurrency(basketItemTotal)}
-//</p>
