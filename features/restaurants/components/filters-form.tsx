@@ -207,7 +207,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                             control={form.control}
                             name="sorting"
                             render={({ field }) => (
-                                <FormItem className="space-y-4">
+                                <FormItem className="space-y-2 sm:space-y-4">
                                     <FormLabel className="text-base">
                                         Sorting
                                     </FormLabel>
@@ -244,7 +244,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                             name="categories"
                             render={() => (
                                 <FormItem>
-                                    <div className="mb-4">
+                                    <div className="mb-2 sm:mb-4">
                                         <FormLabel className="text-base">
                                             Categories
                                         </FormLabel>
@@ -280,7 +280,7 @@ export const FiltersForm = ({ onApply }: FiltersFormProps) => {
                                         />
                                     )}
 
-                                    <div className="space-y-4 pt-4">
+                                    <div className="space-y-2 sm:space-y-4 sm:pt-2 pt-4">
                                         {categoryOptions.map((category) => (
                                             <FormField
                                                 key={category.id}

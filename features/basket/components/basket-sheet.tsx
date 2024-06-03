@@ -6,6 +6,7 @@ import {
     useBasketTotal,
 } from "../hooks/use-basket";
 import {
+    CookingPotIcon,
     CreditCardIcon,
     ShoppingBagIcon,
     TrashIcon,
@@ -19,8 +20,11 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useBasketSheet } from "../hooks/use-basket-sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { usePathname, useRouter } from "next/navigation";
 
 export const BasketSheet = () => {
+    const pathname = usePathname();
+    const router = useRouter();
     const basket = useBasket();
     const basketSheet = useBasketSheet();
     const basketTotal = useBasketTotal();
@@ -84,7 +88,20 @@ export const BasketSheet = () => {
                     </div>
 
                     {basketItemCount == 0 ? (
-                        <footer className="flex flex-col items-center">
+                        <footer className="flex flex-col items-center space-y-2">
+                            <Button
+                                className="w-full text-lg flex items-center"
+                                onClick={() => {
+                                    basketSheet.close();
+                                    if (pathname !=="/restaurants") {
+                                        router.push("/restaurants");
+                                    }
+                                }}
+                            >
+                                <CookingPotIcon className="size-5 mr-2 text-primary-foreground" />
+                                Discover
+                            </Button>
+
                             <Button
                                 className="w-full uppercase tracking-wider"
                                 onClick={basketSheet.close}

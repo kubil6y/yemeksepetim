@@ -45,7 +45,7 @@ export const useBasket = create<BasketState>()(
                     } else {
                         const copyItems = [...state.items];
                         const copyItem = copyItems[existingItemIndex];
-                        copyItem.amount += basketItem.amount;
+                        copyItem.amount += amount;
                         return { ...state, items: copyItems };
                     }
                 }),
