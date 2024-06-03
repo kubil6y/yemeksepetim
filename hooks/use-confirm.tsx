@@ -40,13 +40,13 @@ export const useConfirm = (
     };
 
     const ConfirmationDialogue = () => (
-        <Dialog open={isOpen}>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent>
                 <DialogHeader className="space-y-4">
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription>{message}</DialogDescription>
                 </DialogHeader>
-                <DialogFooter className="pt-2">
+                <DialogFooter className="pt-2 gap-2">
                     <Button variant="outline" onClick={handleCancel}>
                         Cancel
                     </Button>

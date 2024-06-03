@@ -7,7 +7,7 @@ interface BasketSheetState {
 }
 
 export const useBasketSheet = create<BasketSheetState>()((set) => ({
-    isOpen: false,
+    isOpen: true, // TODO change
     open: () => set(() => ({ isOpen: true })),
     close: () => set(() => ({ isOpen: false })),
 }));

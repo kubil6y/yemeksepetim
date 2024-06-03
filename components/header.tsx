@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
-import { Loader2Icon, ShoppingBasketIcon, UserIcon } from "lucide-react";
+import { Loader2Icon, UserIcon } from "lucide-react";
 
 import {
     Dialog,

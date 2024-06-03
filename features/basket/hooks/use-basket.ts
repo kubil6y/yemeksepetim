@@ -1,9 +1,8 @@
 // https://docs.pmnd.rs/zustand/integrations/persisting-store-data
-import { foods } from "@/db/schema";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-type Food = {
+export type FoodItem = {
     id: string;
     name: string;
     description: string;
@@ -15,13 +14,13 @@ type Food = {
 export type BasketItem = {
     id: string; // itemId should be foodId
     amount: number;
-    item: typeof foods.$inferSelect;
+    item: FoodItem;
 };
 
 interface BasketState {
     items: BasketItem[];
-    addItem: (item: typeof foods.$inferSelect, amount?: number) => void;
-    removeItem: (itemId: string, amount: number) => void;
+    addItem: (item: FoodItem, amount?: number) => void;
+    removeItem: (itemId: string, amount?: number) => void;
     deleteItem: (itemId: string) => void;
     clearItems: () => void;
 }
@@ -30,11 +29,11 @@ export const useBasket = create<BasketState>()(
     persist(
         (set) => ({
             items: [],
-            addItem: (item: typeof foods.$inferSelect, amount: number = 1) =>
+            addItem: (item: FoodItem, amount: number = 1) =>
                 set((state) => {
                     const basketItem = { id: item.id, item, amount };
                     if (basketItem.amount <= 0) {
-                        console.log("are you adding item?");
+                        console.log("Are you adding item?");
                         return state;
                     }
                     const existingItemIndex = state.items.findIndex((item) => {
@@ -50,10 +49,10 @@ export const useBasket = create<BasketState>()(
                         return { ...state, items: copyItems };
                     }
                 }),
-            removeItem: (itemId: string, amount: number) =>
+            removeItem: (itemId: string, amount: number = -1) =>
                 set((state) => {
                     if (amount >= 0) {
-                        console.log("are you removing item?");
+                        console.log("Are you removing item?");
                         return state;
                     }
                     const existingItemIndex = state.items.findIndex((item) => {
@@ -64,7 +63,7 @@ export const useBasket = create<BasketState>()(
                     }
                     const copyItems = [...state.items];
                     const copyItem = copyItems[existingItemIndex];
-                    copyItem.amount -= amount;
+                    copyItem.amount += amount;
                     if (copyItem.amount <= 0) {
                         copyItems.splice(existingItemIndex, 1);
                     }
@@ -93,3 +92,31 @@ export const useBasket = create<BasketState>()(
         }
     )
 );
+
+export const useBasketItemCount = () =>{
+    const basketItemCount = useBasket((state) => state.items.length);
+    return basketItemCount;
+}
+
+export const useBasketTotal = () => {
+    const total: number = useBasket((state) => {
+        let sum = 0;
+        for (const basketItem of state.items) {
+            sum += (basketItem.amount) * basketItem.item.price;
+        }
+        return sum;
+    })
+    return total;
+}
+
+export const useBasketItemTotal = (id: string) => {
+    const total: number = useBasket((state) => {
+        const basketItem = state.items.find((item => item.id === id));
+        if (!basketItem) {
+            return 0;
+        } 
+        const sum: number = basketItem.amount * basketItem.item.price;
+        return sum;
+    })
+    return total;
+}

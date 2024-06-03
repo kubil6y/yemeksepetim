@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn, formatCurrency, maxChar } from "@/lib/utils";
 import { PlusIcon } from "lucide-react";
-import { useBasket } from "@/features/basket/hooks/use-basket";
+import { FoodItem, useBasket } from "@/features/basket/hooks/use-basket";
 
 type FoodCardProps = {
     id: string;
@@ -29,18 +29,21 @@ export const FoodCard = ({
     const imageSrc = "/assets/" + imageUrl;
 
     function handleAddBasketItem() {
-        // TODO leftoff
-        console.log(id);
-        //addItem({
-            //id,
-            //name,
-        //}, 1);
+        const food: FoodItem = {
+            id,
+            name,
+            description,
+            imageUrl: imageSrc,
+            price,
+            restaurantName,
+        };
+        addItem(food);
     }
 
     return (
         <Card className="relative w-full shrink-0 overflow-hidden rounded-lg shadow-lg">
-            <div className="absolute right-4 top-4 flex cursor-pointer items-center justify-center rounded-full border p-2 shadow-lg transition-colors hover:bg-accent">
-                <PlusIcon className="size-5 text-primary" onClick={handleAddBasketItem}/>
+            <div className="absolute right-4 top-4 flex cursor-pointer items-center justify-center rounded-full border p-2 text-primary shadow-lg transition-colors hover:bg-accent active:bg-primary active:text-secondary">
+                <PlusIcon onClick={handleAddBasketItem} />
             </div>
             <CardContent className="p-2.5">
                 <div className="item-center flex w-full justify-center">
