@@ -2,8 +2,8 @@ import {
     FilterDesktop,
     FilterModalButton,
 } from "@/features/restaurants/components/filters";
-import { Input } from "@/components/ui/input";
 import { MainFoodLister } from "@/features/restaurants/components/main-food-lister";
+import { SearchInput } from "@/features/search/components/search-input";
 
 export default function RestaurantsPage() {
     return (
@@ -13,10 +13,7 @@ export default function RestaurantsPage() {
 
                 <div className="w-full pt-24 lg:pt-32 pb-16">
                     <div className="flex items-center gap-2">
-                        <Input
-                            className="h-12 w-full rounded-full bg-accent px-4 focus:bg-white sm:h-16 sm:px-6"
-                            placeholder="TODO: Search Input"
-                        />
+                        <SearchInput />
 
                         <div className="block lg:hidden">
                             <FilterModalButton />

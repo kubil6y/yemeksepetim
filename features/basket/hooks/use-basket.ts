@@ -22,7 +22,7 @@ interface BasketState {
     addItem: (item: FoodItem, amount?: number) => void;
     removeItem: (itemId: string, amount?: number) => void;
     deleteItem: (itemId: string) => void;
-    clearItems: () => void;
+    clearAll: () => void;
 }
 
 export const useBasket = create<BasketState>()(
@@ -81,7 +81,7 @@ export const useBasket = create<BasketState>()(
                     copyItems.splice(existingItemIndex, 1);
                     return { ...state, items: copyItems };
                 }),
-            clearItems: () =>
+            clearAll: () =>
                 set((state) => {
                     return { ...state, items: [] };
                 }),

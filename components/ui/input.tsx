@@ -58,7 +58,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {EndIcon && (
                     <div
                         className={cn(
-                            "absolute right-3 top-1/2 -translate-y-1/2 transform",
+                            "absolute right-3 top-1/2 -translate-y-1/2 transform z-50",
                             endIconOnClick && "cursor-pointer"
                         )}
                         onClick={endIconOnClick}

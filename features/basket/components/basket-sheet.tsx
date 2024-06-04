@@ -38,7 +38,7 @@ export const BasketSheet = () => {
     async function handleClearBasket() {
         const ok = await confirm();
         if (ok) {
-            basket.clearItems();
+            basket.clearAll();
         }
     }
     return (
