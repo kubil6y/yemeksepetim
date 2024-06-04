@@ -6,8 +6,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 export const useGetRestaurant = (id?: string) => {
     const params = useSearchParams();
     const router = useRouter();
-    const page = params.get("page") ?? undefined
-    const page_size = params.get("page_size") ?? undefined
+    const page = params.get("page") ?? undefined;
+    const page_size = params.get("page_size") ?? undefined;
 
     const query = useQuery({
         enabled: Boolean(id),
@@ -19,16 +19,17 @@ export const useGetRestaurant = (id?: string) => {
             });
             if (!response.ok) {
                 if (response.status === 404) {
-                    toast.error("Restaurant not found!");
+                    toast.error("Restaurant not found!", {
+                        position: "top-center",
+                    });
                     router.push("/restaurants");
                     throw new Error("Restaurant not found");
                 }
                 throw new Error("Failed to fetch restaurant");
             }
-            const { metadata, data }  = await response.json();
+            const { metadata, data } = await response.json();
             return { metadata, data };
         },
-
     });
     return query;
 };

@@ -41,6 +41,7 @@ export const BasketSheet = () => {
             basket.clearAll();
         }
     }
+
     return (
         <>
             <ClearConfirmDialog />
@@ -48,15 +49,15 @@ export const BasketSheet = () => {
                 <SheetContent className="flex flex-col justify-between">
                     <div>
                         {/* SHEET HEADER */}
-                        <div className="flex items-center justify-between w-full py-4">
-                            <p className="text-xl sm:text-3xl font-semibold">
+                        <div className="flex w-full items-center justify-between py-4">
+                            <p className="text-xl font-semibold sm:text-3xl">
                                 Shopping Card
                             </p>
                             <Icons.logo className="block" />
                         </div>
 
-                        {/* TODO leftoff */}
-                        <ScrollArea className="w-full h-[60vh] border p-1 rounded-lg">
+                        {/* TODO handle height with flex just between something */}
+                        <ScrollArea className="h-[60vh] w-full rounded-lg border p-1">
                             {basketItemCount === 0 ? (
                                 <div className="mt-12 flex w-full items-center justify-center bg-white p-5">
                                     <div className="space-y-5 text-center">
@@ -90,10 +91,10 @@ export const BasketSheet = () => {
                     {basketItemCount == 0 ? (
                         <footer className="flex flex-col items-center space-y-2">
                             <Button
-                                className="w-full text-lg flex items-center"
+                                className="flex w-full items-center text-lg"
                                 onClick={() => {
                                     basketSheet.close();
-                                    if (pathname !=="/restaurants") {
+                                    if (pathname !== "/restaurants") {
                                         router.push("/restaurants");
                                     }
                                 }}
@@ -115,12 +116,13 @@ export const BasketSheet = () => {
                             <div className="text-end text-lg md:text-5xl">
                                 Total {formatCurrency(basketTotal)}
                             </div>
-                            <div className="w-full space-y-2 items-center">
+                            <div className="w-full items-center space-y-2">
                                 <Button
                                     className="w-full uppercase tracking-wider"
-                                    onClick={() =>
-                                        console.log("TODO", basket.items)
-                                    }
+                                    onClick={() => {
+                                        // TODO handle checkout
+                                        console.log("TODO", basket.items);
+                                    }}
                                 >
                                     <CreditCardIcon className="mr-2" />
                                     Checkout

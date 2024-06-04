@@ -1,11 +1,5 @@
 "use client";
 
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
@@ -56,30 +50,15 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
                         className="object-contain"
                     />
 
-                    <TooltipProvider delayDuration={1_000}>
-                        <Tooltip>
-                            <TooltipTrigger className="text-start">
-                                <div className="w-full">
-                                    <p className="text-semibold line-clamp-1 sm:line-clamp-2">
-                                        {item.name}
-                                    </p>
-                                    <p className="line-clamp-1 sm:line-clamp-3 text-xs text-muted-foreground">
-                                        {item.description}{" "}
-                                    </p>
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent className="bg-rose-50">
-                                <div className="w[60vw] md:w-[30vw] p-4">
-                                    <p className="text-semibold">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-xs text-muted-foreground">
-                                        {item.description}{" "}
-                                    </p>
-                                </div>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <div className="w-full">
+                        <p className="text-semibold line-clamp-1 sm:line-clamp-2">
+                            {item.name}
+                        </p>
+
+                        <p className="line-clamp-1 text-xs text-muted-foreground sm:line-clamp-3">
+                            {item.description}{" "}
+                        </p>
+                    </div>
                 </div>
 
                 <div className="ml-4 hidden flex-col justify-between gap-2 sm:ml-8 sm:flex">
@@ -119,7 +98,7 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
                     </p>
                 </div>
 
-                <div className="flex flex-col sm:hidden shrink-0 gap-2 items-center">
+                <div className="flex shrink-0 flex-col items-center gap-2 sm:hidden">
                     <Button
                         size="icon"
                         onClick={() => deleteItem(id)}
