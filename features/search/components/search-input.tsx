@@ -4,35 +4,37 @@ import {
     useGetLatestSearchTerms,
     useLatestSearch,
 } from "../hooks/use-latest-search";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { useMounted } from "@/hooks/use-mounted";
-import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "react-use";
-import { useClickAways } from "@/hooks/use-click-aways";
-import { useGetSearchResults } from "../api/use-get-search-results";
-import { Loader2Icon, SearchIcon, TrashIcon, XIcon } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useMounted } from "@/hooks/use-mounted";
+import { useDebounce, useLockBodyScroll } from "react-use";
+import { useClickAways } from "@/hooks/use-click-aways";
+import { useEffect, useRef, useState } from "react";
+import { useGetSearchResults } from "../api/use-get-search-results";
+import { usePathname, useRouter } from "next/navigation";
+import { Loader2Icon, SearchIcon, TrashIcon, XIcon } from "lucide-react";
 
 const PLACEHOLDER_TEXT = "Search for restaurants...";
 const DURATION = 80;
 
 export const SearchInput = () => {
     const mounted = useMounted();
+
+    // Typing effect
     const [displayedText, setDisplayedText] = useState<string>("");
     const [i, setI] = useState<number>(0);
 
     const [showResults, setShowResults] = useState<boolean>(false);
-    const [focused, setFocused] = useState<boolean>(false);
-
     const [input, setInput] = useState<string>("");
     const [debouncedInput, setDebouncedInput] = useState<string>("");
-    const clickAwayRef1 = useRef(null);
-    const clickAwayRef2 = useRef(null);
+    const [focused, setFocused] = useState<boolean>(false);
+    const clickAwayInputRef = useRef(null);
+    const clickAwayDropdownRef = useRef(null);
 
-    useClickAways([clickAwayRef1, clickAwayRef2], () => {
+    useLockBodyScroll(showResults);
+    useClickAways([clickAwayInputRef, clickAwayDropdownRef], () => {
         setShowResults(false);
     });
 
@@ -95,11 +97,22 @@ export const SearchInput = () => {
 
     return (
         <div className="z-40 w-full">
+            {/* Backdrop */}
+            {showResults && (
+                <div className="absolute inset-0 bg-black/60 scroll-mb-4"></div>
+            )}
+
             <div className="relative w-full">
                 <Input
-                    ref={clickAwayRef1}
+                    onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                            setShowResults(false);
+                            e.currentTarget.blur();
+                        }
+                    }}
+                    ref={clickAwayInputRef}
                     className={cn(
-                        "relative z-10 h-12 w-full rounded-full bg-accent px-4 placeholder:font-semibold placeholder:text-primary/60 focus:bg-white sm:h-16 sm:px-6",
+                        "relative z-20 h-12 w-full rounded-full bg-accent px-4 placeholder:font-semibold placeholder:text-primary/60 focus:bg-white sm:h-16 sm:px-6",
                         focused && "bg-white"
                     )}
                     placeholder={displayedText}
@@ -121,8 +134,8 @@ export const SearchInput = () => {
 
                 {showResults && (
                     <div
-                        className="absolute z-10 mt-1.5 flex w-full flex-col justify-between overflow-hidden rounded-lg border bg-background text-foreground shadow-md"
-                        ref={clickAwayRef2}
+                        className="absolute z-50 mt-1.5 flex w-full flex-col justify-between overflow-hidden rounded-lg border bg-background text-foreground shadow-md"
+                        ref={clickAwayDropdownRef}
                     >
                         <div>
                             {debouncedInput.length === 0 ? (
@@ -175,7 +188,6 @@ export const SearchInput = () => {
                     </div>
                 )}
             </div>
-            {showResults && <div className="fixed inset-0 bg-black/60"></div>}
         </div>
     );
 };
