@@ -4,11 +4,11 @@ import { useSearchParams } from "next/navigation";
 
 export const useGetFoods = () => {
     const params = useSearchParams();
-    const page = params.get("page") ?? "";
-    const page_size = params.get("page_size") ?? "";
-    const sorting = params.get("sorting") ?? "";
-    const categories = params.get("categories") ?? "";
-    const min_order_amount = params.get("min_order_amount") ?? "";
+    const page = params.get("page") ?? undefined;
+    const page_size = params.get("page_size") ?? undefined;
+    const sorting = params.get("sorting") ?? undefined;
+    const categories = params.get("categories") ?? undefined;
+    const min_order_amount = params.get("min_order_amount") ?? undefined;
 
     const query = useQuery({
         queryKey: [

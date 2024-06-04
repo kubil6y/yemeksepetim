@@ -5,6 +5,7 @@ import { QueryProvider } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import { ModalProvider } from "@/providers/modal-provider";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <QueryProvider>
                     <body className={font.className}>
+                        <Toaster />
                         <ModalProvider />
                         <SheetProvider />
                         {children}

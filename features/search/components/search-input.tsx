@@ -132,6 +132,7 @@ export const SearchInput = () => {
                     }}
                 />
 
+                {/* DROPDOWN */}
                 {showResults && (
                     <div
                         className="absolute z-50 mt-1.5 flex w-full flex-col justify-between overflow-hidden rounded-lg border bg-background text-foreground shadow-md"

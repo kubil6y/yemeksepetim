@@ -9,8 +9,6 @@ import { RestaurantsQueryFilters } from "@/lib/validations";
 import { readCSV, readInt, readString } from "@/lib/hono";
 import { count, desc, eq, inArray, and, gte } from "drizzle-orm";
 
-const FOOD_PER_PAGE = 6;
-
 const app = new Hono()
 .get(
     "/",
@@ -26,12 +24,13 @@ const app = new Hono()
     ),
     async (c) => {
         // Parse and validate filters
+        const foodsPerPage = 6;
         const f = new RestaurantsQueryFilters();
         f.sorting = readString(c, "sorting", "suggested");
         f.categories = readCSV(c, "categories", []);
         f.minOrderAmount = readInt(c, "min_order_amount", 50);
         f.filters.page = readInt(c, "page", 1);
-        f.filters.pageSize = readInt(c, "page_size", FOOD_PER_PAGE);
+        f.filters.pageSize = readInt(c, "page_size", foodsPerPage);
         f.filters.sort = readString(c, "sorting", "suggested");
 
         const result = f.validate();

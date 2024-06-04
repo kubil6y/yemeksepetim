@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { Filters } from "./filters";
 
-const restaurantQuerySafesortList = ["suggested", "food_rating", "restaurant_rating"] as const;
+const restaurantQuerySafesortList = [
+    "suggested",
+    "food_rating",
+    "restaurant_rating",
+] as const;
 
 const restaurantsQueryFiltersSchema = z.object({
     page: z.number().min(1).max(1_000),
@@ -33,6 +37,26 @@ export class RestaurantsQueryFilters {
             page: this.filters.page,
             pageSize: this.filters.pageSize,
             sorting: this.sorting,
+        });
+    }
+}
+
+const restaurantQueryFiltersSchema = z.object({
+    page: z.number().min(1).max(1_000),
+    pageSize: z.number().min(1).max(100),
+});
+
+export class RestaurantQueryFilters {
+    public filters: Filters;
+
+    public constructor() {
+        this.filters = new Filters();
+    }
+
+    public validate() {
+        return restaurantQueryFiltersSchema.safeParse({
+            page: this.filters.page,
+            pageSize: this.filters.pageSize,
         });
     }
 }

@@ -1,11 +1,10 @@
 "use client";
 
-import { useGetFoods } from "../api/use-get-foods";
 import { useGetRestaurant } from "../api/use-get-restaurant";
 import { FoodLister } from "./food-lister";
 import { Loader2Icon } from "lucide-react";
-import { NotFoundMessage } from "@/components/not-found-message";
 import { ServerErrorMessage } from "@/components/server-error-message";
+import { NotFoundMessage } from "@/components/not-found-message";
 
 type RestaurantFoodListerProps = {
     restaurantId?: string;
@@ -14,23 +13,24 @@ type RestaurantFoodListerProps = {
 export const RestaurantFoodLister = ({
     restaurantId,
 }: RestaurantFoodListerProps) => {
-    const foodsQuery = useGetFoods();
     const restaurantQuery = useGetRestaurant(restaurantId);
-    if (foodsQuery.isLoading) {
+
+    if (restaurantQuery.isLoading) {
         return (
             <div className="flex w-full items-center justify-center pt-16">
                 <Loader2Icon className="loading-icon" />
             </div>
         );
     }
-    if (foodsQuery.isError) {
+    if (restaurantQuery.isError) {
         return <ServerErrorMessage />;
     }
-    if (foodsQuery.data?.data.length === 0) {
-        return <NotFoundMessage />;
+    if (restaurantQuery.data?.data.foods.length === 0) {
+        //return <NotFoundMessage />;
+        return <div>no foods available</div>
     }
-    if (!foodsQuery.data?.metadata || !foodsQuery.data?.data) {
+    if (!restaurantQuery.data?.metadata || !restaurantQuery.data?.data) {
         return null;
     }
-    return <FoodLister metadata={foodsQuery.data.metadata} data={foodsQuery.data.data} />;
+    return <FoodLister metadata={restaurantQuery.data.metadata} data={restaurantQuery.data.data.foods} />;
 };

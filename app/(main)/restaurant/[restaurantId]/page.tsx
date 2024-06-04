@@ -1,4 +1,4 @@
-import { SearchInput } from "@/features/search/components/search-input";
+import { RestaurantDetails } from "@/features/restaurants/components/restaurant-details";
 import { RestaurantFoodLister } from "@/features/restaurants/components/restaurant-food-lister";
 
 export default function RestaurantDetailPage({
@@ -8,8 +8,7 @@ export default function RestaurantDetailPage({
 }) {
     return (
         <div className="container pt-16">
-            <h1>RestaurantDetailPage {params.restaurantId}</h1>
-            <SearchInput />
+            <RestaurantDetails restaurantId={params.restaurantId}/>
             <RestaurantFoodLister restaurantId={params.restaurantId} />
         </div>
     );

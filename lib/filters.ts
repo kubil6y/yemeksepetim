@@ -52,9 +52,9 @@ export function calculateMetadata(
     totalRecords: number,
     page: number,
     pageSize: number
-): Metadata | undefined {
-    if (totalRecords === 0) {
-        return undefined;
+): Metadata {
+    if (pageSize === 0) {
+        pageSize = 1; // zero division
     }
     const metadata: Metadata = {
         current_page: page,

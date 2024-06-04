@@ -56,7 +56,7 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
                         className="object-contain"
                     />
 
-                    <TooltipProvider>
+                    <TooltipProvider delayDuration={1_000}>
                         <Tooltip>
                             <TooltipTrigger className="text-start">
                                 <div className="w-full">
