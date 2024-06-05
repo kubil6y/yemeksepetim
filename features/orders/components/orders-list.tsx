@@ -1,13 +1,9 @@
 "use client";
 
-import {
-    CookingPotIcon,
-    GalleryVerticalEnd,
-    HomeIcon,
-} from "lucide-react";
-import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { CookingPotIcon, GalleryVerticalEnd, HomeIcon } from "lucide-react";
+import { format } from "date-fns";
 import { useGetOrders } from "../api/use-get-orders";
 import { formatCurrency } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,29 +14,47 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const OrdersList = () => {
     const ordersQuery = useGetOrders();
-
     if (ordersQuery.isLoading) {
         return (
             <div className="mt-8 space-y-2">
-                {new Array(4).fill(null).map(() => (
-                    <OrderCardSkeleton />
+                {new Array(2).fill(null).map((_, index) => (
+                    <OrderCardSkeleton key={index} />
                 ))}
             </div>
         );
     }
-
     if (ordersQuery.isError) {
         return <ServerErrorMessage />;
     }
-
     if (ordersQuery.data?.length === 0) {
         return <EmptyOrderHistory />;
     }
     return (
-        <div className="mt-8 space-y-2">
-            {ordersQuery.data?.map((orderItem) => (
-                <OrderCard key={orderItem.id} {...orderItem} />
-            ))}
+        <div className="mt-8 space-y-4 pb-24">
+            {ordersQuery.data?.map((order) => {
+                let total = 0;
+                for (const item of order.items) {
+                    total += item.price;
+                }
+                return (
+                    <Card key={order.orderId} className="p-2">
+                        <CardContent className="space-y-2">
+                            {order.items.map((orderItem) => (
+                                <OrderCard key={orderItem.id} {...orderItem} />
+                            ))}
+                        </CardContent>
+
+                        <div className="flex items-center justify-between px-8">
+                            <p className="text-lg">
+                                {format(order.createdAt, "MMMM dd, yyyy HH:mm")}
+                            </p>
+                            <p className="text-lg md:text-5xl">
+                                Total {formatCurrency(total)}
+                            </p>
+                        </div>
+                    </Card>
+                );
+            })}
         </div>
     );
 };
@@ -51,7 +65,6 @@ type OrderCardProps = {
     price: number;
     imageUrl: string;
     restaurantId: string;
-    createdAt: string;
 };
 
 function OrderCard({
@@ -60,13 +73,12 @@ function OrderCard({
     price,
     imageUrl,
     restaurantId,
-    createdAt,
 }: OrderCardProps) {
     const imageSrc = "/assets/" + imageUrl;
     const href = "/restaurant/" + restaurantId;
     return (
         <Card className="h-full w-full">
-            <CardContent className="grid h-full w-full grid-cols-7 items-center gap-4 p-4">
+            <CardContent className="grid h-full w-full grid-cols-6 items-center gap-4 p-4">
                 <div className="col-span-1 flex items-center justify-center">
                     <Image
                         src={imageSrc}
@@ -93,8 +105,6 @@ function OrderCard({
                     <Badge className="bg-emerald-500">delivered</Badge>
                 </div>
 
-                <p>{format(createdAt, "MMMM dd, yyyy HH:mm")}</p>
-
                 <p className="text-center text-2xl">{formatCurrency(price)}</p>
             </CardContent>
         </Card>
@@ -102,6 +112,23 @@ function OrderCard({
 }
 
 function OrderCardSkeleton() {
+    return (
+        <Card className="p-2">
+            <CardContent className="space-y-2">
+                {new Array(2).fill(null).map((_, index) => (
+                    <OrderItemCardSkeleton key={index} />
+                ))}
+            </CardContent>
+
+            <div className="flex items-center justify-between px-8">
+                <Skeleton className="h-8 w-20" />
+                <Skeleton className="w-30 h-16" />
+            </div>
+        </Card>
+    );
+}
+
+function OrderItemCardSkeleton() {
     return (
         <Card className="h-full w-full">
             <CardContent className="grid h-full w-full grid-cols-7 items-center gap-4 p-4">
@@ -154,5 +181,5 @@ function EmptyOrderHistory() {
                 </Button>
             </div>
         </div>
-    )
+    );
 }
