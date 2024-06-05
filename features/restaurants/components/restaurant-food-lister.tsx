@@ -6,11 +6,11 @@ import {
     HomeIcon,
     Loader2Icon,
 } from "lucide-react";
-import { useGetRestaurant } from "../api/use-get-restaurant";
 import { FoodLister } from "./food-lister";
 import { ServerErrorMessage } from "@/components/server-error-message";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useGetRestaurantMenu } from "../api/use-get-restaurant-menu";
 
 type RestaurantFoodListerProps = {
     restaurantId?: string;
@@ -19,19 +19,18 @@ type RestaurantFoodListerProps = {
 export const RestaurantFoodLister = ({
     restaurantId,
 }: RestaurantFoodListerProps) => {
-    const restaurantQuery = useGetRestaurant(restaurantId);
-
-    if (restaurantQuery.isLoading) {
+    const menuQuery = useGetRestaurantMenu(restaurantId);
+    if (menuQuery.isLoading) {
         return (
             <div className="flex w-full items-center justify-center pt-16">
                 <Loader2Icon className="loading-icon" />
             </div>
         );
     }
-    if (restaurantQuery.isError) {
+    if (menuQuery.isError) {
         return <ServerErrorMessage />;
     }
-    if (restaurantQuery.data?.data.foods.length === 0) {
+    if (menuQuery.data?.data.length === 0) {
         return (
             <div className="flex flex-col gap-12 items-center justify-center w-full h-60">
                 <div className="inline-flex rounded-full bg-red-100 p-4">
@@ -61,15 +60,15 @@ export const RestaurantFoodLister = ({
             </div>
         );
     }
-    if (!restaurantQuery.data?.metadata || !restaurantQuery.data?.data) {
+    if (!menuQuery.data?.metadata || !menuQuery.data?.data) {
         return null;
     }
     return (
         <div className="mt-2">
-            <h2 className="text-xl sm:text-3xl">Food Selection</h2>
+            <h2 className="text-xl sm:text-3xl">Our Offerings</h2>
             <FoodLister
-                metadata={restaurantQuery.data.metadata}
-                data={restaurantQuery.data.data.foods}
+                metadata={menuQuery.data.metadata}
+                data={menuQuery.data.data}
             />
         </div>
     );

@@ -30,17 +30,17 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
     const { open } = useRestaurantCommentsModal();
 
     if (restaurantQuery.isLoading) {
-    //if (true) {
-        return <RestaurantDetailsSkeleton/>;
+        return <RestaurantDetailsSkeleton />;
     }
     if (restaurantQuery.isError) {
         return null;
     }
-    if (!restaurantQuery.data?.data) {
+    if (!restaurantQuery.data) {
         return null;
     }
-    const { restaurant } = restaurantQuery.data.data;
-    const imageSrc = "/assets/brands/" + restaurant.imageUrl;
+    const { imageUrl, name } = restaurantQuery.data.data.menu;
+    const { foodCount } = restaurantQuery.data.data;
+    const imageSrc = "/assets/brands/" + imageUrl;
 
     if (!mounted) {
         return;
@@ -59,7 +59,7 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>{restaurant.name}</BreadcrumbPage>
+                        <BreadcrumbPage>{name}</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
@@ -67,13 +67,13 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
             <div className="flex gap-4">
                 <Image
                     src={imageSrc}
-                    alt={restaurant.name}
+                    alt={name}
                     width={120}
                     height={120}
                     className="rounded-lg"
                 />
                 <div className="flex flex-col items-start">
-                    <p className="text-3xl">{restaurant.name}</p>
+                    <p className="text-3xl">{name}</p>
                     <div className="mt-2 space-y-1">
                         <div className="flex items-center gap-2">
                             <StarIcon className="size-4 fill-primary text-primary" />
@@ -95,10 +95,7 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
                             </div>
                         </div>
 
-                        {restaurantQuery.data &&
-                            restaurantQuery.data.data.foods.length === 0 && (
-                                <UnavailableHint />
-                            )}
+                        {foodCount === 0 && <UnavailableHint />}
                     </div>
                 </div>
             </div>
@@ -112,29 +109,29 @@ function RestaurantDetailsSkeleton() {
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
-                        <Skeleton className="w-20 h-5" />
+                        <Skeleton className="h-5 w-20" />
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <Skeleton className="w-20 h-5" />
+                        <Skeleton className="h-5 w-20" />
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <Skeleton className="w-20 h-5" />
+                        <Skeleton className="h-5 w-20" />
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
 
             <div className="flex gap-4">
-                <Skeleton className="w-32 h-32 rounded-lg" />
+                <Skeleton className="h-32 w-32 rounded-lg" />
 
                 <div className="flex flex-col items-start">
                     <Skeleton className="h-8 w-40" />
                     <div className="mt-2 space-y-1">
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-2 text-sm">
-                                <Skeleton className="w-24 h-4"/>
-                                <Skeleton className="w-8 h-4"/>
+                                <Skeleton className="h-4 w-24" />
+                                <Skeleton className="h-4 w-8" />
                             </div>
                         </div>
                     </div>

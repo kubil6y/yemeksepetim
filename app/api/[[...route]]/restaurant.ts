@@ -8,8 +8,51 @@ import { calculateMetadata } from "@/lib/filters";
 import { RestaurantQueryFilters } from "@/lib/validations";
 import { readInt } from "@/lib/hono";
 
-const app = new Hono().get(
+const app = new Hono()
+.get(
     "/:id",
+    zValidator(
+        "param",
+        z.object({
+            id: z.string().optional(),
+        })
+    ),
+    async (c) => {
+        const { id } = c.req.valid("param");
+        if (!id) {
+            return c.json({ error: "Missing id" }, 400);
+        }
+
+        const [foodCount] = await db
+            .select({
+                count: count(),
+            })
+            .from(restaurants)
+            .innerJoin(foods, eq(restaurants.id, foods.restaurantId))
+            .where(eq(restaurants.id, id));
+
+        // add votes later!
+        // and comments!
+        const [menu] = await db
+            .select({
+                id: restaurants.id,
+                name: restaurants.name,
+                imageUrl: restaurants.imageUrl,
+            })
+            .from(restaurants)
+            .where(eq(restaurants.id, id));
+
+        if (!menu) {
+            return c.json({ error: "not found!" }, 404);
+        }
+
+        return c.json({
+            data: { menu, foodCount: foodCount.count },
+        });
+    }
+)
+.get(
+    "/:id/menu",
     zValidator(
         "param",
         z.object({
@@ -27,21 +70,6 @@ const app = new Hono().get(
         const { id } = c.req.valid("param");
         if (!id) {
             return c.json({ error: "Missing id" }, 400);
-        }
-
-        // add votes later!
-        // and comments!
-        const [restaurant] = await db
-            .select({
-                id: restaurants.id,
-                name: restaurants.name,
-                imageUrl: restaurants.imageUrl,
-            })
-            .from(restaurants)
-            .where(eq(restaurants.id, id));
-
-        if (!restaurant) {
-            return c.json({ error: "not found!" }, 404);
         }
 
         const foodsPerPage = 6;
@@ -80,13 +108,8 @@ const app = new Hono().get(
             f.filters.page,
             f.filters.pageSize
         );
-        return c.json({
-            metadata,
-            data: {
-                foods: data,
-                restaurant,
-            },
-        });
+
+        return c.json({ metadata, data });
     }
 );
 
