@@ -21,15 +21,15 @@ export const useCreateOrder = () => {
             return data;
         },
         onSuccess: () => {
-            router.push("/orders");
+            router.replace("/orders");
             if (basketSheet.isOpen) {
                 basketSheet.close();
             }
-            basket.clearAll();
             toast.success("Order created");
             queryClient.invalidateQueries({
                 queryKey: ["orders"],
             });
+            basket.clearAll();
         },
         onError: () => {
             toast.error("Failed to create order");

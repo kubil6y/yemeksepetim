@@ -76,6 +76,7 @@ export const orderItemRelations = relations(orderItems, ({ one }) => ({
 export const orders = pgTable("orders", {
     id: text("id").primaryKey(),
     address: text("address").notNull(),
+    userId: text("user_id").notNull(),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 });
 

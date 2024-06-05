@@ -123,7 +123,7 @@ export const BasketSheet = () => {
                             </div>
                             <div className="w-full items-center space-y-2">
                                 <Button
-                                    className="w-full uppercase tracking-wider"
+                                    className="w-full"
                                     onClick={handleCheckout}
                                 >
                                     <CreditCardIcon className="mr-2" />

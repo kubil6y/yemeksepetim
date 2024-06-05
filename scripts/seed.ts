@@ -33,4 +33,4 @@ async function main() {
     console.log("Seeding completed!");
 }
 
-//main();
+main();

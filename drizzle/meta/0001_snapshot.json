@@ -1,6 +1,6 @@
 {
-  "id": "751a284f-6d81-4323-867f-0d6524239c28",
-  "prevId": "ddc671fe-9947-4b95-a4b6-137ba9cddbe5",
+  "id": "4a5179b7-5acd-4a15-9994-2647be907297",
+  "prevId": "99f9adf5-01b9-49f2-8c67-47a3b0904d8d",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -190,6 +190,12 @@
         },
         "address": {
           "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true

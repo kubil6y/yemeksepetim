@@ -30,7 +30,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreateOrder } from "../api/useCreateOrder";
+import { useCreateOrder } from "../api/use-create-order";
 
 const formSchema = z.object({
     address: z
