@@ -3,7 +3,7 @@ import { Filters } from "./filters";
 
 const restaurantQuerySafesortList = [
     "suggested",
-    "food_rating",
+    //"food_rating",
     "restaurant_rating",
 ] as const;
 

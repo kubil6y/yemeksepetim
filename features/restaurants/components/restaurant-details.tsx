@@ -8,22 +8,20 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-import { useGetRestaurant } from "../api/use-get-restaurant";
 import Link from "next/link";
 import Image from "next/image";
-import { UnavailableHint } from "@/components/unavailable-hint";
-import { StarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useMounted } from "@/hooks/use-mounted";
-import { useRestaurantCommentsModal } from "../hooks/use-restaurant-comments-modal";
+import { StarIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMounted } from "@/hooks/use-mounted";
+import { useGetRestaurant } from "../api/use-get-restaurant";
+import { UnavailableHint } from "@/components/unavailable-hint";
+import { useRestaurantCommentsModal } from "../hooks/use-restaurant-comments-modal";
 
 type RestaurantDetailsProps = {
     restaurantId: string;
 };
 
-// TODO
 export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
     const restaurantQuery = useGetRestaurant(restaurantId);
     const mounted = useMounted();

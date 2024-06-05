@@ -16,12 +16,10 @@ export const useGetRestaurantMenu = (id?: string) => {
             const response = await client.api.restaurant[":id"]["menu"].$get({
                 param: { id },
                 query: { page, page_size },
-            })
+            });
             if (!response.ok) {
                 if (response.status === 404) {
-                    toast.error("Restaurant not found!", {
-                        position: "top-center",
-                    });
+                    toast.error("Restaurant not found!");
                     router.push("/restaurants");
                     throw new Error("Restaurant not found");
                 }

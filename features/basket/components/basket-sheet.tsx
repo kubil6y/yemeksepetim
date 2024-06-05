@@ -42,6 +42,11 @@ export const BasketSheet = () => {
         }
     }
 
+    function handleCheckout() {
+        basketSheet.close();
+        router.push("/checkout");
+    }
+
     return (
         <>
             <ClearConfirmDialog />
@@ -119,10 +124,7 @@ export const BasketSheet = () => {
                             <div className="w-full items-center space-y-2">
                                 <Button
                                     className="w-full uppercase tracking-wider"
-                                    onClick={() => {
-                                        // TODO handle checkout
-                                        console.log("TODO", basket.items);
-                                    }}
+                                    onClick={handleCheckout}
                                 >
                                     <CreditCardIcon className="mr-2" />
                                     Checkout

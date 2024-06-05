@@ -7,7 +7,7 @@ export default function RestaurantDetailPage({
     params: { restaurantId: string };
 }) {
     return (
-        <div className="container pt-16">
+        <div className="container py-16">
             <RestaurantDetails restaurantId={params.restaurantId}/>
             <RestaurantFoodLister restaurantId={params.restaurantId} />
         </div>

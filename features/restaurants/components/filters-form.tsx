@@ -30,11 +30,11 @@ const MAX_SEARCH_INPUT_LENGTH = 10;
 const sortingOptions = [
     { id: 0, value: "suggested", label: "Suggested" },
     { id: 1, value: "restaurant_rating", label: "Restaurant rating" },
-    { id: 2, value: "food_rating", label: "Food rating" },
+    //{ id: 2, value: "food_rating", label: "Food rating" },
 ];
 
 const formSchema = z.object({
-    sorting: z.enum(["suggested", "restaurant_rating", "food_rating"]),
+    sorting: z.enum(["suggested", "restaurant_rating"]),
     categories: z.array(z.string()),
     minOrderAmount: z.number().max(1000),
 });

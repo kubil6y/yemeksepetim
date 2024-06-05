@@ -24,7 +24,7 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
                 <QueryProvider>
                     <body className={font.className}>
-                        <Toaster />
+                        <Toaster position="top-center" />
                         <ModalProvider />
                         <SheetProvider />
                         {children}

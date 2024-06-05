@@ -2,23 +2,32 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { BasketItem, useBasket, useBasketItemTotal } from "../hooks/use-basket";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 
 type BasketItemCardProps = {
     basketItem: BasketItem;
+    isFullscreen?: boolean;
 };
 
-export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
+export const BasketItemCard = ({
+    basketItem,
+    isFullscreen = false,
+}: BasketItemCardProps) => {
     const { id, amount, item } = basketItem;
     const { addItem, removeItem, deleteItem } = useBasket();
     const basketItemTotal = useBasketItemTotal(id);
 
     return (
         <Card>
-            <CardContent className="flex items-center justify-between p-2">
+            <CardContent
+                className={cn(
+                    "flex items-center justify-between p-2",
+                    isFullscreen && "p-2 sm:p-6"
+                )}
+            >
                 <div className="flex items-center gap-1 sm:gap-2">
                     <div className="flex flex-col items-center gap-1 sm:hidden">
                         <Button
@@ -50,7 +59,7 @@ export const BasketItemCard = ({ basketItem }: BasketItemCardProps) => {
                         className="object-contain"
                     />
 
-                    <div className="w-full">
+                    <div className="w-4/5">
                         <p className="text-semibold line-clamp-1 sm:line-clamp-2">
                             {item.name}
                         </p>

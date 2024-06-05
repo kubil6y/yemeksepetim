@@ -14,9 +14,7 @@ export const useGetRestaurant = (id?: string) => {
             });
             if (!response.ok) {
                 if (response.status === 404) {
-                    toast.error("Restaurant not found!", {
-                        position: "top-center",
-                    });
+                    toast.error("Restaurant not found!");
                     router.push("/restaurants");
                     throw new Error("Restaurant not found");
                 }
