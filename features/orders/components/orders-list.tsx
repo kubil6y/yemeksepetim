@@ -44,11 +44,11 @@ export const OrdersList = () => {
                             ))}
                         </CardContent>
 
-                        <div className="flex items-center justify-between px-8">
+                        <div className="flex items-center justify-between px-2 sm:px-8">
                             <p className="text-lg">
                                 {format(order.createdAt, "MMMM dd, yyyy HH:mm")}
                             </p>
-                            <p className="text-lg md:text-5xl">
+                            <p className="text-lg md:text-2xl">
                                 Total {formatCurrency(total)}
                             </p>
                         </div>
@@ -78,7 +78,7 @@ function OrderCard({
     const href = "/restaurant/" + restaurantId;
     return (
         <Card className="h-full w-full">
-            <CardContent className="grid h-full w-full grid-cols-6 items-center gap-4 p-4">
+            <CardContent className="grid h-full w-full grid-cols-6 items-center gap-4 p-0">
                 <div className="col-span-1 flex items-center justify-center">
                     <Image
                         src={imageSrc}
@@ -102,10 +102,10 @@ function OrderCard({
                 </div>
 
                 <div>
-                    <Badge className="bg-emerald-500">delivered</Badge>
+                    <Badge className="bg-emerald-500 hover:bg-emerald">delivered</Badge>
                 </div>
 
-                <p className="text-center text-2xl">{formatCurrency(price)}</p>
+                <p className="text-center text-lg">{formatCurrency(price)}</p>
             </CardContent>
         </Card>
     );
