@@ -3,11 +3,6 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 const MAX_SEARCH_RESULTS = 4;
 
-//const dummy: SearchItem[] = [
-//{ id: "1", term: "McDonald's"},
-//{ id: "2", term: "Pizza"},
-//]
-
 type SearchItem = {
     id: string;
     term: string;

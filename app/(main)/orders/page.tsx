@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { OrdersList } from "@/features/orders/components/orders-list";
 import { Undo2Icon } from "lucide-react";
+import { OrdersTable } from "@/features/orders/components/orders-table";
 
 export default function OrderHistoryPage() {
     return (
@@ -15,11 +15,14 @@ export default function OrderHistoryPage() {
                 >
                     <Link href="/restaurants">
                         <Undo2Icon className="size-4 mr-2" />
-                        Home
+                        Restaurants
                     </Link>
                 </Button>
             </div>
-            <OrdersList />
+
+            <div className="w-full my-8">
+                <OrdersTable />
+            </div>
         </div>
     );
 }

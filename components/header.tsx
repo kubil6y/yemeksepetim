@@ -7,11 +7,6 @@ import {
     SignInButton,
     SignUpButton,
 } from "@clerk/nextjs";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Logo } from "./logo";
-import { Loader2Icon, UserIcon } from "lucide-react";
-
 import {
     Dialog,
     DialogContent,
@@ -22,6 +17,11 @@ import {
 } from "@/components/ui/dialog";
 import { Icons } from "./icons";
 import { ShoppingBasket } from "@/features/basket/components/shopping-basket";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Logo } from "./logo";
+import { Loader2Icon, UserIcon } from "lucide-react";
+import { HistoryButton } from "./history-button";
 
 export const Header = () => {
     return (
@@ -31,7 +31,10 @@ export const Header = () => {
                 <Logo />
 
                 <div className="flex items-center justify-between gap-x-8">
-                    <ShoppingBasket />
+                    <div className="gap-x-4 flex items-center">
+                        <HistoryButton />
+                        <ShoppingBasket />
+                    </div>
 
                     <ClerkLoading>
                         <Loader2Icon className="loading-icon" />
