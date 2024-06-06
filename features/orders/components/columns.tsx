@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/column-header";
 import { client } from "@/lib/hono";
 import { InferResponseType } from "hono";
+import Link from "next/link";
 import Image from "next/image";
 import {
     Tooltip,
@@ -87,6 +88,10 @@ export const columns: ColumnDef<ResponseType>[] = [
         accessorKey: "name",
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title="Name" />;
+        },
+        cell: ({ row }) => {
+            const href = `/restaurant/${row.original.restaurantId}`;
+            return <Link href={href} className="hover:underline">{row.original.name}</Link>;
         },
     },
     {

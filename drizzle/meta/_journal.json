@@ -15,6 +15,13 @@
       "when": 1717609373847,
       "tag": "0001_calm_doctor_doom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1717699756172,
+      "tag": "0002_optimal_arclight",
+      "breakpoints": true
     }
   ]
 }

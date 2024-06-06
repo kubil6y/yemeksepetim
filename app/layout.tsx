@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@/providers/query-provider";
 import { SheetProvider } from "@/providers/sheet-provider";
 import { ModalProvider } from "@/providers/modal-provider";
 import "./globals.css";
-import { Toaster } from "sonner";
 
 const font = Inter({ subsets: ["latin"] });
 

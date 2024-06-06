@@ -15,6 +15,11 @@ export const restaurants = pgTable("restaurants", {
     imageUrl: text("image_url").notNull(),
 });
 
+export const restaurantRelations = relations(restaurants, ({ many }) => ({
+    reviews: many(restaurantReviews),
+    foods: many(foods),
+}));
+
 export const categories = pgTable("categories", {
     id: text("id").primaryKey(),
     name: text("name").notNull(),
@@ -88,8 +93,9 @@ export const restaurantReviews = pgTable("restaurant_reviews", {
     id: text("id").primaryKey(),
     text: text("text").notNull(),
     score: integer("score").notNull(),
+    userId: text("user_id").notNull(),
+    username: text("username").notNull(),
     createdAt: timestamp("date", { mode: "date" }).notNull().defaultNow(),
-    username: text("user_name").notNull(),
     restaurantId: text("restaurant_id")
         .notNull()
         .references(() => restaurants.id, { onDelete: "cascade" }),
@@ -99,10 +105,29 @@ export const createReviewSchema = createInsertSchema(restaurantReviews);
 
 export const restaurantReviewsRelations = relations(
     restaurantReviews,
-    ({ one }) => ({
+    ({ one, many }) => ({
         restaurant: one(restaurants, {
             fields: [restaurantReviews.restaurantId],
             references: [restaurants.id],
+        }),
+        ratings: many(restaurantReviewRatings),
+    })
+);
+
+export const restaurantReviewRatings = pgTable("restaurant_review_ratings", {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull(),
+    restaurantReviewId: text("restaurant_review_id")
+        .notNull()
+        .references(() => restaurantReviews.id),
+});
+
+export const restaurantReviewRatingsRelations = relations(
+    restaurantReviewRatings,
+    ({ one }) => ({
+        restaurantReview: one(restaurantReviews, {
+            fields: [restaurantReviewRatings.restaurantReviewId],
+            references: [restaurantReviews.id],
         }),
     })
 );

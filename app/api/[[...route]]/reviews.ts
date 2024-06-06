@@ -9,9 +9,50 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { eq } from "drizzle-orm";
+import { eq, count } from "drizzle-orm";
+import { clerkClient } from "@clerk/nextjs/server";
+import { formatName } from "@/lib/utils";
 
-const app = new Hono().get(
+const app = new Hono()
+.get(
+    "/:id",
+    zValidator(
+        "param",
+        z.object({
+            id: z.string().optional(),
+        })
+    ),
+    async (c) => {
+        // no auth required
+        // cba pagination
+        // return -> review count, score average, all reviews
+
+        const { id } = c.req.valid("param");
+        if (!id) {
+            return c.json({ error: "missing restaurant id" }, 400);
+        }
+
+        /*
+        {
+                id: restaurants.id,
+                name: restaurants.name,
+                reviews: restaurantReviews
+                count: count(),
+            }
+        */
+        const [data] = await db
+            .select()
+            .from(restaurants)
+            .innerJoin(
+                restaurantReviews,
+                eq(restaurants.id, restaurantReviews.restaurantId)
+            )
+            .where(eq(restaurants.id, id));
+
+        return c.json({ data });
+    }
+)
+.post(
     "/:id",
     zValidator(
         "param",
@@ -24,7 +65,6 @@ const app = new Hono().get(
         createReviewSchema.pick({
             text: true,
             score: true,
-            username: true,
             restaurantId: true,
         })
     ),
@@ -39,7 +79,14 @@ const app = new Hono().get(
             return c.json({ error: "Unauthorized" }, 401);
         }
 
-        const { text, score, username, restaurantId } = c.req.valid("json");
+        const user = await clerkClient.users.getUser(auth.userId);
+        const username: string = formatName(
+            user.firstName,
+            user.lastName,
+            user.username
+        );
+
+        const { text, score, restaurantId } = c.req.valid("json");
 
         const [restaurant] = await db
             .select()
@@ -53,10 +100,11 @@ const app = new Hono().get(
             .insert(restaurantReviews)
             .values({
                 id: createId(),
-                username: username,
-                restaurantId,
+                username,
                 score,
                 text,
+                restaurantId,
+                userId: auth.userId,
                 createdAt: new Date(),
             })
             .returning();
@@ -64,4 +112,5 @@ const app = new Hono().get(
         return c.json({ data });
     }
 );
+
 export default app;

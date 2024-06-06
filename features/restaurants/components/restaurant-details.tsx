@@ -16,7 +16,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useMounted } from "@/hooks/use-mounted";
 import { useGetRestaurant } from "../api/use-get-restaurant";
 import { UnavailableHint } from "@/components/unavailable-hint";
-import { useRestaurantCommentsModal } from "../hooks/use-restaurant-comments-modal";
+import { useRestaurantReviewsModal } from "../hooks/use-restaurant-reviews-modal";
+import { ServerErrorMessage } from "@/components/server-error-message";
 
 type RestaurantDetailsProps = {
     restaurantId: string;
@@ -25,24 +26,24 @@ type RestaurantDetailsProps = {
 export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
     const restaurantQuery = useGetRestaurant(restaurantId);
     const mounted = useMounted();
-    const { open } = useRestaurantCommentsModal();
+    const { open } = useRestaurantReviewsModal();
 
     if (restaurantQuery.isLoading) {
         return <RestaurantDetailsSkeleton />;
     }
     if (restaurantQuery.isError) {
-        return null;
+        return <ServerErrorMessage />;
     }
     if (!restaurantQuery.data) {
         return null;
     }
-    const { imageUrl, name } = restaurantQuery.data.data.menu;
+    if (!mounted) {
+        return null;
+    }
+
+    const { imageUrl, name } = restaurantQuery.data.data.restaurant;
     const { foodCount } = restaurantQuery.data.data;
     const imageSrc = "/assets/brands/" + imageUrl;
-
-    if (!mounted) {
-        return;
-    }
 
     return (
         <div className="space-y-4 py-4">
@@ -88,7 +89,7 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
                                     className="text-primary hover:text-primary"
                                     onClick={() => open(restaurantId)}
                                 >
-                                    Comments
+                                    Reviews
                                 </Button>
                             </div>
                         </div>

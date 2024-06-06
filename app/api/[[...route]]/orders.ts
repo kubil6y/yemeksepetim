@@ -24,6 +24,7 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" }, 401);
     }
 
+
     // No need for pagination
     const data = await db
         .select({

@@ -17,6 +17,7 @@ type FoodListerProps = {
         description: string;
         imageUrl: string;
         price: number;
+        restaurantId: string;
         restaurantName: string;
     }[];
 };

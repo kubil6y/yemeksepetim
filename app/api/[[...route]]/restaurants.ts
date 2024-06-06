@@ -59,6 +59,7 @@ const app = new Hono()
                 description: foods.description,
                 imageUrl: foods.imageUrl,
                 price: foods.price,
+                restaurantId: restaurants.id,
                 restaurantName: restaurants.name,
             })
             .from(foods)

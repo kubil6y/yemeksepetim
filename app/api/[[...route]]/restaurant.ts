@@ -32,8 +32,8 @@ const app = new Hono()
             .where(eq(restaurants.id, id));
 
         // add votes later!
-        // and comments!
-        const [menu] = await db
+        // and reviews!
+        const [restaurant] = await db
             .select({
                 id: restaurants.id,
                 name: restaurants.name,
@@ -42,12 +42,12 @@ const app = new Hono()
             .from(restaurants)
             .where(eq(restaurants.id, id));
 
-        if (!menu) {
+        if (!restaurant) {
             return c.json({ error: "not found!" }, 404);
         }
 
         return c.json({
-            data: { menu, foodCount: foodCount.count },
+            data: { restaurant, foodCount: foodCount.count },
         });
     }
 )
@@ -95,6 +95,7 @@ const app = new Hono()
                 description: foods.description,
                 imageUrl: foods.imageUrl,
                 price: foods.price,
+                restaurantId: restaurants.id,
                 restaurantName: restaurants.name,
             })
             .from(foods)

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn, formatCurrency, maxChar } from "@/lib/utils";
@@ -12,6 +13,7 @@ type FoodCardProps = {
     description: string;
     imageUrl: string;
     price: number;
+    restaurantId: string;
     restaurantName: string;
     showRestaurantName?: boolean;
 };
@@ -22,6 +24,7 @@ export const FoodCard = ({
     description,
     imageUrl,
     price,
+    restaurantId,
     restaurantName,
     showRestaurantName = true,
 }: FoodCardProps) => {
@@ -59,9 +62,9 @@ export const FoodCard = ({
                     <div className="flex w-full items-center justify-between text-sm">
                         <div className="flex w-4/5 flex-col font-semibold">
                             {showRestaurantName && (
-                                <div className="text-lg xl:text-xl">
+                                <Link href={`/restaurant/${restaurantId}`} className="text-lg xl:text-xl hover:underline">
                                     {maxChar(restaurantName, 18)}
-                                </div>
+                                </Link>
                             )}
                             <div className={cn(showRestaurantName ? "" : "")}>
                                 {maxChar(name, 18)}
