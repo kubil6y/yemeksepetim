@@ -30,14 +30,14 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     filterKey: string;
-    onSelected: (rows: TData[]) => void;
+    onSelectChanged: (rows: TData[]) => void;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     filterKey,
-    onSelected,
+    onSelectChanged,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
             }
             return selectedIds;
         }
-        onSelected(getSelectedIds());
+        onSelectChanged(getSelectedIds());
     }, [table.getFilteredSelectedRowModel().rows])
 
     return (

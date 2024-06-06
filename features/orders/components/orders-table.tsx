@@ -42,7 +42,7 @@ export const OrdersTable = () => {
                 columns={columns}
                 data={ordersQuery.data}
                 filterKey={"orderId"}
-                onSelected={(rows) => {
+                onSelectChanged={(rows) => {
                     let total = 0;
                     for (const row of rows) {
                         total += row.price;
