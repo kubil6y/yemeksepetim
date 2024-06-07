@@ -5,7 +5,7 @@ import { PopularCategories } from "@/features/categories/components/popular-cate
 
 export default function MainPage() {
     return (
-        <main className="space-y-20">
+        <main className="space-y-12">
             <Hero />
             <PopularBrands />
             <PopularCategories />

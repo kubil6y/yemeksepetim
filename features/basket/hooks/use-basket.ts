@@ -33,7 +33,6 @@ export const useBasket = create<BasketState>()(
                 set((state) => {
                     const basketItem = { id: item.id, item, amount };
                     if (basketItem.amount <= 0) {
-                        console.log("Are you adding item?");
                         return state;
                     }
                     const existingItemIndex = state.items.findIndex((item) => {
@@ -52,7 +51,6 @@ export const useBasket = create<BasketState>()(
             removeItem: (itemId: string, amount: number = -1) =>
                 set((state) => {
                     if (amount >= 0) {
-                        console.log("Are you removing item?");
                         return state;
                     }
                     const existingItemIndex = state.items.findIndex((item) => {

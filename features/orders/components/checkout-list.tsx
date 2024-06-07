@@ -149,7 +149,7 @@ export const CheckoutItemList = ({ className }: CheckoutItemLisProps) => {
                         >
                             Order
                             {createOrder.isPending ? (
-                                <Loader2Icon className="size-6 ml2 animate-spin" />
+                                <Loader2Icon className="size-6 ml-2 animate-spin" />
                             ) : (
                                 <SendIcon className="size-6 ml-2" />
                             )}

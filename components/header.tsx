@@ -94,7 +94,10 @@ export const Header = () => {
 
                 <Logo />
 
-                <ShoppingBasket />
+                <div className="gap-x-2 flex items-center">
+                    <HistoryButton />
+                    <ShoppingBasket />
+                </div>
             </div>
         </header>
     );

@@ -61,7 +61,7 @@ export const BasketSheet = () => {
                             <Icons.logo className="block" />
                         </div>
 
-                        {/* TODO handle height with flex just between something */}
+                        {/* TODO handle height with flex just between something (cba lel)*/}
                         <ScrollArea className="h-[60vh] w-full rounded-lg border p-1">
                             {basketItemCount === 0 ? (
                                 <div className="mt-12 flex w-full items-center justify-center bg-white p-5">
