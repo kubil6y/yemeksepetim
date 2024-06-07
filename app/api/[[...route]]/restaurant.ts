@@ -39,8 +39,7 @@ const app = new Hono()
                 reviewCount: sql`COUNT(${restaurantReviews.id})`.mapWith(
                     Number
                 ),
-                averageScore:
-                sql`SUM(ABS(${restaurantReviews.score})) / CAST(COUNT(${restaurantReviews.id}) AS FLOAT)`.mapWith(
+                averageScore: sql`AVG(${restaurantReviews.score})`.mapWith(
                     Number
                 ),
             })

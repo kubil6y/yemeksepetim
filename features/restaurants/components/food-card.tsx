@@ -16,6 +16,7 @@ type FoodCardProps = {
     restaurantId: string;
     restaurantName: string;
     showRestaurantName?: boolean;
+    averageScore?: number;
 };
 
 export const FoodCard = ({
@@ -27,6 +28,7 @@ export const FoodCard = ({
     restaurantId,
     restaurantName,
     showRestaurantName = true,
+    averageScore,
 }: FoodCardProps) => {
     const { addItem } = useBasket();
     const imageSrc = "/assets/" + imageUrl;
@@ -62,8 +64,14 @@ export const FoodCard = ({
                     <div className="flex w-full items-center justify-between text-sm">
                         <div className="flex w-4/5 flex-col font-semibold">
                             {showRestaurantName && (
-                                <Link href={`/restaurant/${restaurantId}`} className="text-lg xl:text-xl hover:underline">
-                                    {maxChar(restaurantName, 18)}
+                                <Link
+                                    href={`/restaurant/${restaurantId}`}
+                                    className="text-lg xl:text-xl hover:underline"
+                                >
+                                    {maxChar(restaurantName, 18)}{" "}
+                                    <span className="text-muted-foreground text-xs italic font-normal">
+                                        {(averageScore ?? 0).toFixed(2)}/5
+                                    </span>
                                 </Link>
                             )}
                             <div className={cn(showRestaurantName ? "" : "")}>
