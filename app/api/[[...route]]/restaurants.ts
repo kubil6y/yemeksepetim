@@ -5,7 +5,6 @@ import { zValidator } from "@hono/zod-validator";
 import { foods, restaurants } from "@/db/schema";
 import { calculateMetadata } from "@/lib/filters";
 import { RestaurantsQueryFilters } from "@/lib/validations";
-//import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { readCSV, readInt, readString } from "@/lib/hono";
 import { count, desc, eq, inArray, and, gte } from "drizzle-orm";
 
