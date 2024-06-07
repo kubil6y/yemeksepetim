@@ -41,7 +41,7 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
         return null;
     }
 
-    const { imageUrl, name } = restaurantQuery.data.data.restaurant;
+    const { imageUrl, name, averageScore, reviewCount } = restaurantQuery.data.data.restaurant;
     const { foodCount } = restaurantQuery.data.data;
     const imageSrc = "/assets/brands/" + imageUrl;
 
@@ -78,22 +78,22 @@ export const RestaurantDetails = ({ restaurantId }: RestaurantDetailsProps) => {
                             <StarIcon className="size-4 fill-primary text-primary" />
                             <div className="flex items-center gap-2 text-sm">
                                 <p className="text-primary">
-                                    2.9/5{" "}
-                                    <span className="text-muted-foreground">
-                                        (+13000)
+                                    {averageScore ? averageScore.toFixed(2) : 0} / 5{" "}
+                                    <span className="text-muted-foreground italic">
+                                        ({reviewCount ?? 0} Reviews)
                                     </span>
                                 </p>
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="text-primary hover:text-primary"
-                                    onClick={() => open(restaurantId)}
-                                >
-                                    Reviews
-                                </Button>
                             </div>
                         </div>
 
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-primary hover:text-primary"
+                            onClick={() => open(restaurantId, name, imageSrc)}
+                        >
+                            Reviews
+                        </Button>
                         {foodCount === 0 && <UnavailableHint />}
                     </div>
                 </div>

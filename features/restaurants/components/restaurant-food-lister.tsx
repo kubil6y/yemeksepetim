@@ -32,7 +32,7 @@ export const RestaurantFoodLister = ({
     }
     if (menuQuery.data?.data.length === 0) {
         return (
-            <div className="flex flex-col gap-12 items-center justify-center w-full h-60">
+            <div className="flex flex-col gap-12 items-center justify-center w-full h-60 mt-12">
                 <div className="inline-flex rounded-full bg-red-100 p-4">
                     <div className="rounded-full bg-red-200 stroke-red-600 p-4">
                         <CalendarX2 className="text-red-500" />

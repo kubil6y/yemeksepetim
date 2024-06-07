@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetRestaurantReviews = (restaurantId?: string) => {
     const query = useQuery({
         enabled: Boolean(restaurantId),
-        queryKey: ["restaurant", { restaurantId }],
+        queryKey: ["restaurant_review", { id: restaurantId }],
         queryFn: async () => {
             const response = await client.api.reviews[":id"].$get({
                 param: { id: restaurantId },

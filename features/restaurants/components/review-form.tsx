@@ -12,14 +12,14 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { SendIcon, StarIcon } from "lucide-react";
+import { Loader2Icon, SendIcon, StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { isMobile as isMobileDevice } from "react-device-detect";
 import { Textarea } from "@/components/ui/textarea";
 import { useRestaurantReviewsModal } from "@/features/restaurants/hooks/use-restaurant-reviews-modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMounted } from "@/hooks/use-mounted";
+import { usePostReview } from "@/features/reviews/api/use-post-review";
 
 const formSchema = z.object({
     text: z
@@ -35,6 +35,7 @@ type FormValues = z.input<typeof formSchema>;
 
 export const ReviewForm = () => {
     const mounted = useMounted();
+    const postReview = usePostReview();
     const { restaurantId } = useRestaurantReviewsModal();
     const [isMouseIn, setIsMouseIn] = useState<boolean>(false);
     const [starAmount, setStarAmount] = useState<number>(0);
@@ -53,11 +54,23 @@ export const ReviewForm = () => {
     }, [finalStarAmount]);
 
     function onSubmit(values: FormValues) {
-        console.log({
-            restaurantId,
-            text: values.text,
-            score: values.score,
-        });
+        if (!restaurantId) {
+            return;
+        }
+        postReview.mutate(
+            {
+                restaurantId,
+                text: values.text,
+                score: values.score,
+            },
+            {
+                onSuccess: () => {
+                    setFinalStarAmount(0);
+                    setStarAmount(0);
+                    form.reset();
+                },
+            }
+        );
     }
 
     if (!mounted) {
@@ -126,12 +139,7 @@ export const ReviewForm = () => {
                                                                 className={cn(
                                                                     "size-10 text-primary",
                                                                     filled &&
-                                                                    !isMouseIn &&
-                                                                    "fill-primary",
-                                                                    !isMobileDevice &&
-                                                                    isMouseIn &&
-                                                                    filled &&
-                                                                    "fill-rose-400"
+                                                                    "fill-primary"
                                                                 )}
                                                             />
                                                         </div>
@@ -163,8 +171,16 @@ export const ReviewForm = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full">
-                        <SendIcon className="size-4 mr-2" />
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={postReview.isPending}
+                    >
+                        {postReview.isPending ? (
+                            <Loader2Icon className="size-4 mr-2 animate-spin" />
+                        ) : (
+                            <SendIcon className="size-4 mr-2" />
+                        )}
                         Send
                     </Button>
                 </form>
@@ -172,4 +188,3 @@ export const ReviewForm = () => {
         </div>
     );
 };
-

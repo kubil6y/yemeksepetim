@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { db } from "@/db/drizzle";
-import { count, eq } from "drizzle-orm";
+import { count, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
-import { foods, restaurants } from "@/db/schema";
+import { foods, restaurantReviews, restaurants } from "@/db/schema";
 import { calculateMetadata } from "@/lib/filters";
 import { RestaurantQueryFilters } from "@/lib/validations";
 import { readInt } from "@/lib/hono";
@@ -31,16 +31,26 @@ const app = new Hono()
             .innerJoin(foods, eq(restaurants.id, foods.restaurantId))
             .where(eq(restaurants.id, id));
 
-        // add votes later!
-        // and reviews!
         const [restaurant] = await db
             .select({
                 id: restaurants.id,
                 name: restaurants.name,
                 imageUrl: restaurants.imageUrl,
+                reviewCount: sql`COUNT(${restaurantReviews.id})`.mapWith(
+                    Number
+                ),
+                averageScore:
+                sql`SUM(ABS(${restaurantReviews.score})) / CAST(COUNT(${restaurantReviews.id}) AS FLOAT)`.mapWith(
+                    Number
+                ),
             })
             .from(restaurants)
-            .where(eq(restaurants.id, id));
+            .leftJoin(
+                restaurantReviews,
+                eq(restaurants.id, restaurantReviews.restaurantId)
+            )
+            .where(eq(restaurants.id, id))
+            .groupBy(restaurants.id);
 
         if (!restaurant) {
             return c.json({ error: "not found!" }, 404);

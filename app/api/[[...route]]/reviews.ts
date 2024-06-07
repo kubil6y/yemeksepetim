@@ -9,7 +9,7 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { eq, count } from "drizzle-orm";
+import { eq, count, desc } from "drizzle-orm";
 import { clerkClient } from "@clerk/nextjs/server";
 import { formatName } from "@/lib/utils";
 
@@ -32,28 +32,29 @@ const app = new Hono()
             return c.json({ error: "missing restaurant id" }, 400);
         }
 
-        /*
-        {
-                id: restaurants.id,
-                name: restaurants.name,
-                reviews: restaurantReviews
-                count: count(),
-            }
-        */
-        const [data] = await db
-            .select()
+        const data = await db
+            .select({
+                id: restaurantReviews.id,
+                text: restaurantReviews.text,
+                username: restaurantReviews.username,
+                userId: restaurantReviews.userId,
+                score: restaurantReviews.score,
+                createdAt: restaurantReviews.createdAt,
+            })
             .from(restaurants)
             .innerJoin(
                 restaurantReviews,
                 eq(restaurants.id, restaurantReviews.restaurantId)
             )
-            .where(eq(restaurants.id, id));
+            .where(eq(restaurants.id, id))
+            .orderBy(desc(restaurantReviews.createdAt));
 
         return c.json({ data });
     }
 )
 .post(
     "/:id",
+    clerkMiddleware(),
     zValidator(
         "param",
         z.object({
@@ -68,7 +69,6 @@ const app = new Hono()
             restaurantId: true,
         })
     ),
-    clerkMiddleware(),
     async (c) => {
         const { id } = c.req.valid("param");
         if (!id) {

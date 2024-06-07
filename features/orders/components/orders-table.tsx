@@ -20,7 +20,6 @@ export const OrdersTable = () => {
     const mounted = useMounted();
     const [total, setTotal] = useState<number>(0);
     const ordersQuery = useGetOrders();
-    console.log(ordersQuery.data);
 
     if (!mounted) {
         return null;
