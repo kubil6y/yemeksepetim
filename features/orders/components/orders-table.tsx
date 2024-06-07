@@ -20,6 +20,8 @@ export const OrdersTable = () => {
     const mounted = useMounted();
     const [total, setTotal] = useState<number>(0);
     const ordersQuery = useGetOrders();
+    console.log(ordersQuery.data);
+
     if (!mounted) {
         return null;
     }
@@ -45,12 +47,14 @@ export const OrdersTable = () => {
                 onSelectChanged={(rows) => {
                     let total = 0;
                     for (const row of rows) {
-                        total += row.price;
+                        total += row.amount * row.price;
                     }
                     setTotal(total);
                 }}
             />
-            <p className="text-end text-2xl md:text-5xl">Total {formatCurrency(total)}</p>
+            <p className="text-end text-2xl md:text-5xl">
+                Total {formatCurrency(total)}
+            </p>
         </div>
     );
 };

@@ -1,5 +1,11 @@
 "use client";
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { formatCurrency, maxChar } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { CopyIcon } from "lucide-react";
@@ -9,12 +15,6 @@ import { client } from "@/lib/hono";
 import { InferResponseType } from "hono";
 import Link from "next/link";
 import Image from "next/image";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { format } from "date-fns";
 export type ResponseType = InferResponseType<
     typeof client.api.orders.$get,
@@ -91,7 +91,11 @@ export const columns: ColumnDef<ResponseType>[] = [
         },
         cell: ({ row }) => {
             const href = `/restaurant/${row.original.restaurantId}`;
-            return <Link href={href} className="hover:underline">{row.original.name}</Link>;
+            return (
+                <Link href={href} className="hover:underline">
+                    {row.original.name}
+                </Link>
+            );
         },
     },
     {
@@ -100,7 +104,11 @@ export const columns: ColumnDef<ResponseType>[] = [
             return <DataTableColumnHeader column={column} title="Created At" />;
         },
         cell: ({ row }) => {
-            return <div>{format(row.original.createdAt, "MMMM dd, yyyy HH:mm")}</div>;
+            return (
+                <div>
+                    {format(row.original.createdAt, "MMMM dd, yyyy HH:mm")}
+                </div>
+            );
         },
     },
     {
@@ -124,12 +132,31 @@ export const columns: ColumnDef<ResponseType>[] = [
         },
     },
     {
+        accessorKey: "amount",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Amount" />;
+        },
+    },
+    {
         accessorKey: "price",
         header: ({ column }) => {
             return <DataTableColumnHeader column={column} title="Price" />;
         },
         cell: ({ row }) => {
             const formatted = formatCurrency(parseFloat(row.getValue("price")));
+            return <div className="font-medium">{formatted}</div>;
+        },
+    },
+    {
+        accessorKey: "sum",
+        header: ({ column }) => {
+            return <DataTableColumnHeader column={column} title="Price" />;
+        },
+        cell: ({ row }) => {
+            const sum =
+                parseFloat(row.getValue("amount")) *
+                parseFloat(row.getValue("price"));
+            const formatted = formatCurrency(sum);
             return <div className="font-medium">{formatted}</div>;
         },
     },
