@@ -1,6 +1,6 @@
 ## Next14/Hono YemekSepetim Clone
 
-Stack:
+###Stack:
 
 -   Typescript
 -   hono.js
@@ -10,3 +10,13 @@ Stack:
 -   shadcn/ui
 -   zustand
 -   zod
+
+###Features:
+
+-   Responsive design (mobile first)
+-   Landing page
+-   Filter orders
+-   Order items
+-   Review a restaurant
+-   Review rating system
+-   View past orders in data table
