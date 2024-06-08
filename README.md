@@ -1,6 +1,8 @@
 ## Next14/Hono YemekSepetim Clone
 
-###Stack:
+[Visit yemeksepetim clone](https://yemeksepetim.vercel.app/)
+
+### Stack:
 
 -   Typescript
 -   hono.js
@@ -11,7 +13,7 @@
 -   zustand
 -   zod
 
-###Features:
+### Features:
 
 -   Responsive design (mobile first)
 -   Landing page
