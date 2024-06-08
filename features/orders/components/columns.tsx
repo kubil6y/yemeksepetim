@@ -150,7 +150,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     {
         accessorKey: "sum",
         header: ({ column }) => {
-            return <DataTableColumnHeader column={column} title="Price" />;
+            return <DataTableColumnHeader column={column} title="Sum" />;
         },
         cell: ({ row }) => {
             const sum =
