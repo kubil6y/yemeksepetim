@@ -96,6 +96,15 @@ export const useBasketItemCount = () =>{
     return basketItemCount;
 }
 
+export const useBasketNestedItemsCount = () => {
+    const items = useBasket(state => state.items);
+    let sum = 0;
+    for (const item of items) {
+        sum += item.amount;
+    }
+    return sum;
+}
+
 export const useBasketTotal = () => {
     const total: number = useBasket((state) => {
         let sum = 0;
