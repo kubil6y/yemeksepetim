@@ -6,6 +6,7 @@
 
 -   Typescript
 -   hono.js
+-   drizzle orm
 -   tanstack-query
 -   clerkjs
 -   tailwindcss
