@@ -11,7 +11,6 @@ export const foodsMcdonalds: (typeof foods.$inferSelect)[] = [
         restaurantId: "r1",
         categoryId: "c2",
     },
-
     {
         id: createId(),
         name: "Potato Chips",
@@ -21,7 +20,6 @@ export const foodsMcdonalds: (typeof foods.$inferSelect)[] = [
         restaurantId: "r1",
         categoryId: "c2",
     },
-
     {
         id: createId(),
         name: "Double Cheeseburger Menu",
@@ -31,7 +29,6 @@ export const foodsMcdonalds: (typeof foods.$inferSelect)[] = [
         restaurantId: "r1",
         categoryId: "c2",
     },
-
     {
         id: createId(),
         name: "2x Big Mac™ Menu",
@@ -41,7 +38,6 @@ export const foodsMcdonalds: (typeof foods.$inferSelect)[] = [
         restaurantId: "r1",
         categoryId: "c2",
     },
-
     {
         id: createId(),
         name: "Double Quarter Pounder Menu",
@@ -52,13 +48,30 @@ export const foodsMcdonalds: (typeof foods.$inferSelect)[] = [
         restaurantId: "r1",
         categoryId: "c2",
     },
-
     {
         id: createId(),
         name: "McChicken™ Menu",
         description: "McChicken + Potato Chips (Medium) + Coca-Cola",
         imageUrl: "foods/mcdonalds/big_mac.jpg",
         price: 215,
+        restaurantId: "r1",
+        categoryId: "c2",
+    },
+    {
+        id: createId(),
+        name: "Mc Match Day Special",
+        description: "Any 3x Burger + Potato Chips (Medium) + Coca-Cola",
+        imageUrl: "foods/mcdonalds/match_day.jpg",
+        price: 450,
+        restaurantId: "r1",
+        categoryId: "c2",
+    },
+    {
+        id: createId(),
+        name: "Mc First Date Special",
+        description: "2x McChicken + Chicken Bucket + Potato Chips (Medium) + Coca-Cola",
+        imageUrl: "foods/mcdonalds/first_date.jpg",
+        price: 320,
         restaurantId: "r1",
         categoryId: "c2",
     },

@@ -1,5 +1,5 @@
 {
-  "id": "99f9adf5-01b9-49f2-8c67-47a3b0904d8d",
+  "id": "a8f48b2a-9c34-4814-9690-149683500f39",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -198,8 +198,7 @@
           "name": "user_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "default": "''"
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -211,6 +210,48 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.restaurant_review_ratings": {
+      "name": "restaurant_review_ratings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "restaurant_review_id": {
+          "name": "restaurant_review_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "restaurant_review_ratings_restaurant_review_id_restaurant_reviews_id_fk": {
+          "name": "restaurant_review_ratings_restaurant_review_id_restaurant_reviews_id_fk",
+          "tableFrom": "restaurant_review_ratings",
+          "tableTo": "restaurant_reviews",
+          "columnsFrom": [
+            "restaurant_review_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -236,18 +277,24 @@
           "primaryKey": false,
           "notNull": true
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "date": {
           "name": "date",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
-        },
-        "user_name": {
-          "name": "user_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
         },
         "restaurant_id": {
           "name": "restaurant_id",

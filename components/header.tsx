@@ -32,6 +32,7 @@ export const Header = () => {
 
                 <div className="flex items-center justify-between gap-x-8">
                     <div className="gap-x-4 flex items-center">
+                        <GithubLink />
                         <HistoryButton />
                         <ShoppingBasket />
                     </div>
@@ -95,6 +96,7 @@ export const Header = () => {
                 <Logo />
 
                 <div className="gap-x-2 flex items-center">
+                    <GithubLink />
                     <HistoryButton />
                     <ShoppingBasket />
                 </div>
@@ -139,4 +141,19 @@ function SignedOutUserIcon() {
             </DialogContent>
         </Dialog>
     );
+}
+
+function GithubLink() {
+    return (
+        <Button
+            size="icon"
+            variant="outline"
+            className="flex cursor-pointer items-center justify-center rounded-full"
+            asChild
+        >
+            <Link href="https://github.com/kubil6y/yemeksepetim" target="_blank">
+                <Icons.github className="size-5" />
+            </Link>
+        </Button>
+    )
 }
