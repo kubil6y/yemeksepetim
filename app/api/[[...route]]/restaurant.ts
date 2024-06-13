@@ -106,10 +106,21 @@ const app = new Hono()
                 price: foods.price,
                 restaurantId: restaurants.id,
                 restaurantName: restaurants.name,
+                reviewCount: sql`COUNT(${restaurantReviews.id})`.mapWith(
+                    Number
+                ),
+                averageScore: sql`AVG(${restaurantReviews.score})`.mapWith(
+                    Number
+                ),
             })
             .from(foods)
             .innerJoin(restaurants, eq(foods.restaurantId, restaurants.id))
+            .leftJoin(
+                restaurantReviews,
+                eq(restaurants.id, restaurantReviews.restaurantId)
+            )
             .where(eq(restaurants.id, id))
+            .groupBy(restaurants.id, foods.id)
             .limit(f.filters.limit())
             .offset(f.filters.offset());
 
